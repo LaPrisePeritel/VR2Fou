@@ -364,7 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f638dd97a531af44fb334f13a5b63ce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aliensPrefab: {fileID: 6170997028971824630, guid: 48413505a04e27946bccf8ef7294bd2c,
+  aliensPrefab: {fileID: 2935624742507014495, guid: 48413505a04e27946bccf8ef7294bd2c,
     type: 3}
   spaceBetweenAliens: 1.5
   rows: 1
