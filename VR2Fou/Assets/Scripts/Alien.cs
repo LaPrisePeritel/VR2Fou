@@ -6,7 +6,7 @@ public class Alien : MonoBehaviour
     private Action onTouchBorder;
 
     private Vector3 leftBorder, rightBorder;
-    
+
     public void Initialisation(Action _onTouchBorder, Vector3 _leftBorder, Vector3 _rightBorder)
     {
         onTouchBorder = _onTouchBorder;
