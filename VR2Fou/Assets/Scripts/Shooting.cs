@@ -25,8 +25,7 @@ public class Shooting : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Bullet b = Instantiate<Bullet>(prefabBullet);
-            b.direction = cam.forward * speedBullet;
-            Destroy(b.gameObject, 5.0f);
+            b.Initiate(cam.transform.position, cam.forward * speedBullet);
         } 
     }
 }
