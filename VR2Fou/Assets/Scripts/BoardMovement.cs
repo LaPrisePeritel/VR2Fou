@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BoardMovement : MonoBehaviour
@@ -63,9 +64,21 @@ public class BoardMovement : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(startPosition + Vector3.left * leftBorderOffset, startPosition + Vector3.right * rightBorderOffset);
+        if (startPosition != Vector3.zero)
+        {
+            Gizmos.DrawLine(startPosition + Vector3.left * leftBorderOffset,
+                startPosition + Vector3.right * rightBorderOffset);
 
-        Gizmos.DrawWireSphere(startPosition + Vector3.left * leftBorderOffset, 0.5f);
-        Gizmos.DrawWireSphere(startPosition + Vector3.right * rightBorderOffset, 0.5f);
+            Gizmos.DrawWireSphere(startPosition + Vector3.left * leftBorderOffset, 0.5f);
+            Gizmos.DrawWireSphere(startPosition + Vector3.right * rightBorderOffset, 0.5f);
+        }
+        else
+        {
+            Gizmos.DrawLine(transform.position + Vector3.left * leftBorderOffset,
+                transform.position + Vector3.right * rightBorderOffset);
+
+            Gizmos.DrawWireSphere(transform.position + Vector3.left * leftBorderOffset, 0.5f);
+            Gizmos.DrawWireSphere(transform.position + Vector3.right * rightBorderOffset, 0.5f);
+        }
     }
 }
