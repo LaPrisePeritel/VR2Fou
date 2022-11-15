@@ -115,6 +115,9 @@ public class BoardMovement : MonoBehaviour
 
             Gizmos.DrawWireSphere(transform.position + Vector3.left * leftBorderOffset, 0.5f);
             Gizmos.DrawWireSphere(transform.position + Vector3.right * rightBorderOffset, 0.5f);
+            
+            Gizmos.color = Color.black;
+            Gizmos.DrawSphere(transform.position, 1f);
         }
     }
 }
