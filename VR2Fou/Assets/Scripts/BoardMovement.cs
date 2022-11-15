@@ -45,7 +45,10 @@ public class BoardMovement : MonoBehaviour
                 Vector3 alienPosition = transform.position + Vector3.down * spaceBetweenAliens * i +
                                         j * spaceBetweenAliens * Vector3.right;
                 aliens[i, j] = Instantiate(aliensPrefab, alienPosition, Quaternion.identity);
-                aliens[i, j].Initialisation(ChangeDirection, startPosition + Vector3.left * leftBorderOffset, startPosition + Vector3.right * rightBorderOffset);
+                aliens[i, j].Initialisation(ChangeDirection, 
+                    startPosition + Vector3.left * leftBorderOffset, 
+                    startPosition + Vector3.right * rightBorderOffset, 
+                    AliensIncreaseSpeed);
                 aliens[i, j].transform.parent = transform;
             }
         }
@@ -70,6 +73,12 @@ public class BoardMovement : MonoBehaviour
         moveDirection *= -1f;
         StopAllCoroutines();
         StartCoroutine(DownDirection());
+    }
+
+    private void AliensIncreaseSpeed()
+    {
+        hSpeed += increaseSpeedPerDeath;
+        vSpeed += increaseSpeedPerDeath;
     }
 
     private IEnumerator DownDirection()
@@ -106,6 +115,9 @@ public class BoardMovement : MonoBehaviour
 
             Gizmos.DrawWireSphere(transform.position + Vector3.left * leftBorderOffset, 0.5f);
             Gizmos.DrawWireSphere(transform.position + Vector3.right * rightBorderOffset, 0.5f);
+            
+            Gizmos.color = Color.black;
+            Gizmos.DrawSphere(transform.position, 1f);
         }
     }
 }

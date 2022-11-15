@@ -3,15 +3,17 @@ using UnityEngine;
 
 public class Alien : MonoBehaviour
 {
-    private Action onTouchBorder;
+    private Action onTouchBorder, onDeath;
 
     private Vector3 leftBorder, rightBorder;
 
-    public void Initialisation(Action _onTouchBorder, Vector3 _leftBorder, Vector3 _rightBorder)
+    public void Initialisation(Action _onTouchBorder, Vector3 _leftBorder, Vector3 _rightBorder, Action _onDeath)
     {
         onTouchBorder = _onTouchBorder;
         leftBorder = _leftBorder;
         rightBorder = _rightBorder;
+
+        onDeath = _onDeath;
     }
 
     private void Update()
@@ -25,5 +27,4 @@ public class Alien : MonoBehaviour
             onTouchBorder();
         }
     }
-
 }
