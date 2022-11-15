@@ -371,6 +371,9 @@ MonoBehaviour:
   columns: 4
   leftBorderOffset: 10
   rightBorderOffset: 10
+  horizontalSpeed: 2
+  verticalSpeed: 1
+  increaseSpeedPerDeath: 0.1
 --- !u!4 &636116842
 Transform:
   m_ObjectHideFlags: 0
@@ -865,6 +868,7 @@ GameObject:
   - component: {fileID: 1725982595}
   - component: {fileID: 1725982597}
   - component: {fileID: 1725982596}
+  - component: {fileID: 1725982598}
   m_Layer: 0
   m_Name: XRRig
   m_TagString: Untagged
@@ -950,6 +954,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &1725982598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725982592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82cd9387c5a37f146b04c3c0188578bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 963194228}
+  shootingDirection: {x: 0, y: 0, z: 0}
+  prefabBullet: {fileID: 3884862862415128373, guid: 788d642bd7a709e4cb508713576d0f98,
+    type: 3}
+  speedBullet: 0.8
 --- !u!1 &1728657555
 GameObject:
   m_ObjectHideFlags: 0

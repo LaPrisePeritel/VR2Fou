@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class BoardMovement : MonoBehaviour
@@ -10,6 +11,8 @@ public class BoardMovement : MonoBehaviour
     private Vector3 startPosition;
     private float moveDirection;
 
+    private float hSpeed, vSpeed;
+
     [Header("Initialization")]
     [SerializeField] private Alien aliensPrefab;
     [SerializeField] private float spaceBetweenAliens;
@@ -17,9 +20,16 @@ public class BoardMovement : MonoBehaviour
     [Space]
     [SerializeField] private float leftBorderOffset, rightBorderOffset;
 
+    [Header("Movements")]
+    [SerializeField] private float horizontalSpeed;
+    [SerializeField] private float verticalSpeed;
+    [SerializeField] private float increaseSpeedPerDeath;
+    
     private void Awake()
     {
         startPosition = transform.position;
+        hSpeed = horizontalSpeed;
+        vSpeed = verticalSpeed;
 
         moveDirection = Vector3.Distance(transform.position, transform.position + Vector3.left * leftBorderOffset) >
                         Vector3.Distance(transform.position, transform.position + Vector3.right * rightBorderOffset)
@@ -35,7 +45,10 @@ public class BoardMovement : MonoBehaviour
                 Vector3 alienPosition = transform.position + Vector3.down * spaceBetweenAliens * i +
                                         j * spaceBetweenAliens * Vector3.right;
                 aliens[i, j] = Instantiate(aliensPrefab, alienPosition, Quaternion.identity);
-                aliens[i, j].Initialisation(ChangeDirection, startPosition + Vector3.left * leftBorderOffset, startPosition + Vector3.right * rightBorderOffset);
+                aliens[i, j].Initialisation(ChangeDirection, 
+                    startPosition + Vector3.left * leftBorderOffset, 
+                    startPosition + Vector3.right * rightBorderOffset, 
+                    AliensIncreaseSpeed);
                 aliens[i, j].transform.parent = transform;
             }
         }
@@ -43,7 +56,7 @@ public class BoardMovement : MonoBehaviour
 
     private void Update()
     {
-        transform.position += moveDirection * Time.deltaTime * Vector3.right;
+        transform.position += moveDirection * hSpeed * Time.deltaTime * Vector3.right;
     }
 
     private void LateUpdate()
@@ -58,7 +71,30 @@ public class BoardMovement : MonoBehaviour
 
         reset = false;
         moveDirection *= -1f;
-        transform.position += spaceBetweenAliens * Vector3.down;
+        StopAllCoroutines();
+        StartCoroutine(DownDirection());
+    }
+
+    private void AliensIncreaseSpeed()
+    {
+        hSpeed += increaseSpeedPerDeath;
+        vSpeed += increaseSpeedPerDeath;
+    }
+
+    private IEnumerator DownDirection()
+    {
+        float start = transform.position.y;
+        float finalDownDirection = start - spaceBetweenAliens;
+        float t = 0f;
+
+        while (t <= 1f)
+        {
+            t += vSpeed * Time.deltaTime;
+            float y = Mathf.Lerp(start, finalDownDirection, t);
+            transform.position = new Vector3(transform.position.x, y, transform.position.z);
+
+            yield return null;
+        }
     }
 
     private void OnDrawGizmos()
@@ -79,6 +115,9 @@ public class BoardMovement : MonoBehaviour
 
             Gizmos.DrawWireSphere(transform.position + Vector3.left * leftBorderOffset, 0.5f);
             Gizmos.DrawWireSphere(transform.position + Vector3.right * rightBorderOffset, 0.5f);
+            
+            Gizmos.color = Color.black;
+            Gizmos.DrawSphere(transform.position, 1f);
         }
     }
 }
