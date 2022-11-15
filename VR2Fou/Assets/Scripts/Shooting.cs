@@ -22,10 +22,10 @@ public class Shooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             Bullet b = Instantiate<Bullet>(prefabBullet);
-            b.Initiate(cam.transform.position, cam.forward * speedBullet);
+            b.Initiate(cam.transform.position, cam.up * speedBullet);
         } 
     }
 }
