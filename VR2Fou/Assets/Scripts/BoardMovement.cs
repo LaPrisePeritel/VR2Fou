@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class BoardMovement : MonoBehaviour
@@ -10,6 +11,8 @@ public class BoardMovement : MonoBehaviour
     private Vector3 startPosition;
     private float moveDirection;
 
+    private float hSpeed, vSpeed;
+
     [Header("Initialization")]
     [SerializeField] private Alien aliensPrefab;
     [SerializeField] private float spaceBetweenAliens;
@@ -17,9 +20,16 @@ public class BoardMovement : MonoBehaviour
     [Space]
     [SerializeField] private float leftBorderOffset, rightBorderOffset;
 
+    [Header("Movements")]
+    [SerializeField] private float horizontalSpeed;
+    [SerializeField] private float verticalSpeed;
+    [SerializeField] private float increaseSpeedPerDeath;
+    
     private void Awake()
     {
         startPosition = transform.position;
+        hSpeed = horizontalSpeed;
+        vSpeed = verticalSpeed;
 
         moveDirection = Vector3.Distance(transform.position, transform.position + Vector3.left * leftBorderOffset) >
                         Vector3.Distance(transform.position, transform.position + Vector3.right * rightBorderOffset)
@@ -43,7 +53,7 @@ public class BoardMovement : MonoBehaviour
 
     private void Update()
     {
-        transform.position += moveDirection * Time.deltaTime * Vector3.right;
+        transform.position += moveDirection * hSpeed * Time.deltaTime * Vector3.right;
     }
 
     private void LateUpdate()
@@ -58,7 +68,24 @@ public class BoardMovement : MonoBehaviour
 
         reset = false;
         moveDirection *= -1f;
-        transform.position += spaceBetweenAliens * Vector3.down;
+        StopAllCoroutines();
+        StartCoroutine(DownDirection());
+    }
+
+    private IEnumerator DownDirection()
+    {
+        float start = transform.position.y;
+        float finalDownDirection = start - spaceBetweenAliens;
+        float t = 0f;
+
+        while (t <= 1f)
+        {
+            t += vSpeed * Time.deltaTime;
+            float y = Mathf.Lerp(start, finalDownDirection, t);
+            transform.position = new Vector3(transform.position.x, y, transform.position.z);
+
+            yield return null;
+        }
     }
 
     private void OnDrawGizmos()

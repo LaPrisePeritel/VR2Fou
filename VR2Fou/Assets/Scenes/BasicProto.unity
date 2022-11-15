@@ -371,6 +371,9 @@ MonoBehaviour:
   columns: 4
   leftBorderOffset: 10
   rightBorderOffset: 10
+  horizontalSpeed: 1
+  verticalSpeed: 1
+  increaseSpeedPerDeath: 0.1
 --- !u!4 &636116842
 Transform:
   m_ObjectHideFlags: 0
