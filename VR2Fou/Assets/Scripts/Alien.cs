@@ -27,17 +27,4 @@ public class Alien : MonoBehaviour
             onTouchBorder();
         }
     }
-
-    private void OnCollisionEnter(Collision c)
-    {
-        Debug.Log(c.gameObject.name);
-        if (c.gameObject.CompareTag("Bullet"))
-        {
-            Destroy(c.gameObject);
-            
-            onDeath?.Invoke();
-            
-            Destroy(gameObject);
-        }
-    }
 }
