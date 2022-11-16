@@ -35,21 +35,48 @@ public class BoardMovement : MonoBehaviour
                         Vector3.Distance(transform.position, transform.position + Vector3.right * rightBorderOffset)
             ? -1f
             : 1f;
+        
+        SpawnAliens();
+    }
 
+    private void SpawnAliens()
+    {
         aliens = new Alien[rows, columns];
 
-        for (int i = 0; i < rows; i++)
+        bool c = columns % 2 == 0;
+
+        if (c)
         {
-            for (int j = 0; j < columns; j++)
+            for (int i = 0; i < rows; i++)
             {
-                Vector3 alienPosition = transform.position + Vector3.down * spaceBetweenAliens * i +
-                                        j * spaceBetweenAliens * Vector3.right;
-                aliens[i, j] = Instantiate(aliensPrefab, alienPosition, Quaternion.identity);
-                aliens[i, j].Initialisation(ChangeDirection, 
-                    startPosition + Vector3.left * leftBorderOffset, 
-                    startPosition + Vector3.right * rightBorderOffset, 
-                    AliensIncreaseSpeed);
-                aliens[i, j].transform.parent = transform;
+                for (int j = -columns / 2; j < columns / 2; j++)
+                {
+                    Vector3 alienPosition = transform.position + Vector3.down * spaceBetweenAliens * (i + 0.5f) +
+                                            Vector3.right * spaceBetweenAliens * (j + 0.5f);
+                    aliens[i, j + columns / 2] = Instantiate(aliensPrefab, alienPosition, Quaternion.identity);
+                    aliens[i, j + columns / 2].Initialisation(ChangeDirection,
+                        startPosition + Vector3.left * leftBorderOffset,
+                        startPosition + Vector3.right * rightBorderOffset,
+                        AliensIncreaseSpeed);
+                    aliens[i, j + columns / 2].transform.parent = transform;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = -columns / 2 - 1; j < columns / 2; j++)
+                {
+                    Vector3 alienPosition = transform.position + Vector3.down * spaceBetweenAliens * (i + 0.5f) +
+                                            Vector3.right * spaceBetweenAliens * (j + 1);
+                    aliens[i, j + columns / 2 + 1] = Instantiate(aliensPrefab, alienPosition, Quaternion.identity);
+                    aliens[i, j + columns / 2 + 1].Initialisation(ChangeDirection,
+                        startPosition + Vector3.left * leftBorderOffset,
+                        startPosition + Vector3.right * rightBorderOffset,
+                        AliensIncreaseSpeed);
+                    aliens[i, j + columns / 2 + 1].transform.parent = transform;
+                }
             }
         }
     }
@@ -100,6 +127,7 @@ public class BoardMovement : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
+
         if (startPosition != Vector3.zero)
         {
             Gizmos.DrawLine(startPosition + Vector3.left * leftBorderOffset,
@@ -118,6 +146,37 @@ public class BoardMovement : MonoBehaviour
             
             Gizmos.color = Color.black;
             Gizmos.DrawSphere(transform.position, 1f);
+            
+            Gizmos.color = Color.red;
+
+            bool c = columns % 2 == 0;
+
+            if (c)
+            {
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = -columns / 2; j < columns / 2; j++)
+                    {
+                        Vector3 alienPosition = transform.position + Vector3.down * spaceBetweenAliens * (i + 0.5f) +
+                                                Vector3.right * spaceBetweenAliens * (j + 0.5f);
+
+                        Gizmos.DrawCube(alienPosition, Vector3.one);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = -columns / 2 - 1; j < columns / 2; j++)
+                    {
+                        Vector3 alienPosition = transform.position + Vector3.down * spaceBetweenAliens * (i + 0.5f) +
+                                                Vector3.right * spaceBetweenAliens * (j + 1);
+
+                        Gizmos.DrawCube(alienPosition, Vector3.one);
+                    }
+                }
+            }
         }
     }
 }

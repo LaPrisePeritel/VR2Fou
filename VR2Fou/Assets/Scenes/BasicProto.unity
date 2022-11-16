@@ -367,13 +367,13 @@ MonoBehaviour:
   aliensPrefab: {fileID: 2935624742507014495, guid: 48413505a04e27946bccf8ef7294bd2c,
     type: 3}
   spaceBetweenAliens: 1.5
-  rows: 2
-  columns: 4
-  leftBorderOffset: 10
+  rows: 3
+  columns: 5
+  leftBorderOffset: 7.75
   rightBorderOffset: 10
   horizontalSpeed: 2
   verticalSpeed: 1
-  increaseSpeedPerDeath: 0.1
+  increaseSpeedPerDeath: 0.25
 --- !u!4 &636116842
 Transform:
   m_ObjectHideFlags: 0
@@ -382,7 +382,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 636116840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 10}
+  m_LocalPosition: {x: 0, y: 7.5, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -679,6 +679,7 @@ GameObject:
   - component: {fileID: 963194229}
   - component: {fileID: 963194231}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194232}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -817,6 +818,18 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &963194232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ceba1f60c81eec49b7a595d431fcb0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1045848415
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,8 +975,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82cd9387c5a37f146b04c3c0188578bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 1433246199}
-  shootingDirection: {x: 0, y: 0, z: 0}
   prefabBullet: {fileID: 3884862862415128373, guid: 788d642bd7a709e4cb508713576d0f98,
     type: 3}
   speedBullet: 0.64
