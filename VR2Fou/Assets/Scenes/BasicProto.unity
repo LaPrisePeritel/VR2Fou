@@ -980,6 +980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Speed>k__BackingField: 6
+  movementClampX: 5
 --- !u!54 &1433246202
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1012,10 +1013,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1725982594}
   - component: {fileID: 1725982593}
-  - component: {fileID: 1725982595}
   - component: {fileID: 1725982597}
   - component: {fileID: 1725982596}
-  - component: {fileID: 1725982598}
   m_Layer: 0
   m_Name: XRRig
   m_TagString: Untagged
@@ -1058,19 +1057,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1725982595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1725982592}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 005e7ac59c97e254f949e529806ae7d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Speed>k__BackingField: 1
 --- !u!136 &1725982596
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1101,23 +1087,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &1725982598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1725982592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82cd9387c5a37f146b04c3c0188578bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 963194228}
-  shootingDirection: {x: 0, y: 0, z: 0}
-  prefabBullet: {fileID: 3884862862415128373, guid: 788d642bd7a709e4cb508713576d0f98,
-    type: 3}
-  speedBullet: 0.8
 --- !u!1 &1728657555
 GameObject:
   m_ObjectHideFlags: 0

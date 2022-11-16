@@ -19,13 +19,4 @@ public class Bullet : MonoBehaviour
     {
         transform.Translate(direction);
     }
-    private void OnCollisionEnter(Collision c)
-    {
-        Debug.Log(c.gameObject.name);
-        if (c.collider.CompareTag("Alien"))
-        {
-            Destroy(c.gameObject);
-            Destroy(gameObject);
-        }
-    }
 }
