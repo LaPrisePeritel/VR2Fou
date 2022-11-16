@@ -4,28 +4,30 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
+    private Camera mainCamera;
+    private Vector3 shootingDirection;
+
     [SerializeField]
-    Transform cam;
-    [SerializeField]
-    Vector3 shootingDirection;
-    [SerializeField]
-    Bullet prefabBullet;
+    private Bullet prefabBullet;
+
     [SerializeField]
     [Range(0.1f, 2.0f)]
-    float speedBullet;
+    private float speedBullet;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        shootingDirection = cam.forward;
+        shootingDirection = transform.forward;
+        mainCamera = Camera.main;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.UpArrow))
         {
-            Bullet b = Instantiate<Bullet>(prefabBullet);
-            b.Initiate(cam.transform.position, cam.up * speedBullet);
-        } 
+            Bullet b = Instantiate(prefabBullet);
+            b.Initiate(mainCamera, transform.up * speedBullet, transform.position);
+        }
     }
 }
