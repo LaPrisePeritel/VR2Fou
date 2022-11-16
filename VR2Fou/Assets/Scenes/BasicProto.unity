@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -367,13 +367,13 @@ MonoBehaviour:
   aliensPrefab: {fileID: 2935624742507014495, guid: 48413505a04e27946bccf8ef7294bd2c,
     type: 3}
   spaceBetweenAliens: 1.5
-  rows: 2
+  rows: 3
   columns: 4
-  leftBorderOffset: 10
+  leftBorderOffset: 7.75
   rightBorderOffset: 10
   horizontalSpeed: 2
   verticalSpeed: 1
-  increaseSpeedPerDeath: 0.1
+  increaseSpeedPerDeath: 0.25
 --- !u!4 &636116842
 Transform:
   m_ObjectHideFlags: 0
@@ -382,7 +382,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 636116840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 10}
+  m_LocalPosition: {x: -2.25, y: 7.5, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -980,6 +980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Speed>k__BackingField: 6
+  movementClampX: 5
 --- !u!54 &1433246202
 Rigidbody:
   m_ObjectHideFlags: 0

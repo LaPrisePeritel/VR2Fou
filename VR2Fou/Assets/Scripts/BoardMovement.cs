@@ -100,6 +100,7 @@ public class BoardMovement : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
+
         if (startPosition != Vector3.zero)
         {
             Gizmos.DrawLine(startPosition + Vector3.left * leftBorderOffset,
@@ -118,6 +119,19 @@ public class BoardMovement : MonoBehaviour
             
             Gizmos.color = Color.black;
             Gizmos.DrawSphere(transform.position, 1f);
+            
+            Gizmos.color = Color.red;
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    Vector3 alienPosition = transform.position + Vector3.down * spaceBetweenAliens * i +
+                                            Vector3.right * spaceBetweenAliens * j;
+                    
+                    Gizmos.DrawCube(alienPosition, Vector3.one);
+                }
+            }
         }
     }
 }
