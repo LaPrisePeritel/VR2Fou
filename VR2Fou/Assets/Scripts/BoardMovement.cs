@@ -81,6 +81,11 @@ public class BoardMovement : MonoBehaviour
         }
     }
 
+    public Alien[,] GetAliens()
+    {
+        return aliens;
+    }
+    
     private void Update()
     {
         transform.position += moveDirection * hSpeed * Time.deltaTime * Vector3.right;

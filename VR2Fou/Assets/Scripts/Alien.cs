@@ -16,6 +16,11 @@ public class Alien : MonoBehaviour
         onDeath = _onDeath;
     }
 
+    public void AddOnDeathAction(Action _onDeath)
+    {
+        onDeath += _onDeath;
+    }
+
     private void Update()
     {
         if (transform.position.x + transform.localScale.x / 2f >= rightBorder.x)

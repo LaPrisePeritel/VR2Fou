@@ -369,7 +369,7 @@ MonoBehaviour:
   spaceBetweenAliens: 1.5
   rows: 3
   columns: 5
-  leftBorderOffset: 7.75
+  leftBorderOffset: 10
   rightBorderOffset: 10
   horizontalSpeed: 2
   verticalSpeed: 1
