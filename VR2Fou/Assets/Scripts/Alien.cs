@@ -12,6 +12,13 @@ public class Alien : MonoBehaviour
     [SerializeField]
     private ParticleSystem deathParticle;
 
+    private bool isDead;
+    private float deathDuration = 0;
+
+    private void Awake()
+    {
+        deathParticle.Stop();
+    }
 
     public void Initialisation(Action _onTouchBorder, Vector3 _leftBorder, Vector3 _rightBorder, Action _onDeath)
     {
@@ -38,11 +45,24 @@ public class Alien : MonoBehaviour
         {
             onTouchBorder();
         }
+        if (isDead)
+        {
+            deathDuration += Time.deltaTime;
+            if(deathDuration >= deathParticle.main.duration)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+    private void OnDestroy()
+    {
+        GameManager.instance.IncrementScore();
     }
 
     private void OnDeath()
     {
-        animator.SetTrigger("Death");
+        isDead = true;
+        deathParticle.Play();
     }
     private void OnCollisionEnter(Collision c)
     {
@@ -50,7 +70,7 @@ public class Alien : MonoBehaviour
         if (c.collider.CompareTag("Bullet"))
         {
             Destroy(c.gameObject);
-            OnDeath();
+            animator.SetTrigger("Death");
         }
     }
 }
