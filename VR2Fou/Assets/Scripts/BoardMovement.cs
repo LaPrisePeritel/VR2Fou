@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BoardMovement : MonoBehaviour
 {
+    private Ship ship;
+
     private Alien[,] aliens;
 
     private bool reset;
@@ -27,6 +29,8 @@ public class BoardMovement : MonoBehaviour
     
     private void Awake()
     {
+        ship = FindObjectOfType<Ship>();
+        
         startPosition = transform.position;
         hSpeed = horizontalSpeed;
         vSpeed = verticalSpeed;
