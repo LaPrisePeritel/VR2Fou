@@ -1,16 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public enum EBulletType
+    {
+        Bullet,
+        BlackHole
+    }
+    
     private const float LIFETIME = 5.0f;
     private const float CAMERA_SHAKE_DURATION = 1.0f;
     private const float CAMERA_SHAKE_MAGNITUDE = 3.0f;
 
-    public Vector3 direction;
+    private Vector3 direction;
 
     private CameraShake cameraShake;
+
+    public EBulletType bulletType;
 
     private void Start()
     {
@@ -27,5 +36,15 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         transform.Translate(direction);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Alien"))
+            return;
+
+        other.transform.parent.GetComponent<Alien>().Hitted(bulletType, transform.position);
+        
+        Destroy(gameObject);
     }
 }

@@ -5,7 +5,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    static public GameManager instance;
+    public static GameManager instance;
 
     [Header("Score")]
 
@@ -31,7 +31,8 @@ public class GameManager : MonoBehaviour
     public void IncrementScore()
     {
         score++;
-        ScoreText.text = score.ToString();
+        if (ScoreText != null)
+            ScoreText.text = score.ToString();
     }
     #endregion
 }

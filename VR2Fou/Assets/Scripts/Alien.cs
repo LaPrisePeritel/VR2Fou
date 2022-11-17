@@ -1,13 +1,15 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Alien : MonoBehaviour
 {
+    private MeshRenderer meshRenderer;
+    private Animator animator;
+
     private Action onTouchBorder, onDeath;
 
     private Vector3 leftBorder, rightBorder;
-    
-    private Animator animator;
 
     [SerializeField]
     private ParticleSystem deathParticle;
@@ -15,9 +17,15 @@ public class Alien : MonoBehaviour
     private bool isDead;
     private float deathDuration = 0;
 
+    [Header("Materials")]
+    [SerializeField] private Material vacuumMaterial;
+
     private void Awake()
     {
         deathParticle.Stop();
+        
+        animator = GetComponent<Animator>();
+        meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
     }
 
     public void Initialisation(Action _onTouchBorder, Vector3 _leftBorder, Vector3 _rightBorder, Action _onDeath)
@@ -27,7 +35,6 @@ public class Alien : MonoBehaviour
         rightBorder = _rightBorder;
 
         onDeath = _onDeath;
-        animator = GetComponent<Animator>();
     }
 
     public void AddOnDeathAction(Action _onDeath)
@@ -37,6 +44,9 @@ public class Alien : MonoBehaviour
 
     private void Update()
     {
+        if (isDead)
+            return;
+        
         if (transform.position.x + transform.localScale.x / 2f >= rightBorder.x)
         {
             onTouchBorder();
@@ -45,15 +55,16 @@ public class Alien : MonoBehaviour
         {
             onTouchBorder();
         }
-        if (isDead)
+        /*if (isDead)
         {
             deathDuration += Time.deltaTime;
             if(deathDuration >= deathParticle.main.duration)
             {
                 Destroy(gameObject);
             }
-        }
+        }*/
     }
+    
     private void OnDestroy()
     {
         GameManager.instance.IncrementScore();
@@ -64,13 +75,49 @@ public class Alien : MonoBehaviour
         isDead = true;
         deathParticle.Play();
     }
-    private void OnCollisionEnter(Collision c)
+
+    private IEnumerator BlackHoleDeath(Vector3 _holePosition, Material _vacuumMaterial)
     {
-        Debug.Log(c.gameObject.name);
+        meshRenderer.material = _vacuumMaterial;
+        meshRenderer.material.SetVector("_Black_Hole_Position", _holePosition);
+        
+        float t = 0f;
+
+        while (t <= 1f)
+        {
+            yield return null;
+            
+            t += Time.deltaTime;
+            float value = Mathf.Lerp(0f, 1f, t);
+            meshRenderer.material.SetFloat("_Effect", value);
+        }
+        
+        Destroy(gameObject);
+    }
+
+    public void Hitted(Bullet.EBulletType _bulletType, Vector3 _bulletPosition)
+    {
+        if (isDead)
+            return;
+        
+        isDead = true; //TEMP
+        
+        StopAllCoroutines();
+        
+        switch (_bulletType)
+        {
+            case Bullet.EBulletType.BlackHole:
+                StartCoroutine(BlackHoleDeath(_bulletPosition, vacuumMaterial));
+                break;
+        }
+    }
+    
+    /*private void OnCollisionEnter(Collision c)
+    {
         if (c.collider.CompareTag("Bullet"))
         {
             Destroy(c.gameObject);
             animator.SetTrigger("Death");
         }
-    }
+    }*/
 }
