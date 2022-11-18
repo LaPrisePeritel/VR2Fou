@@ -45,7 +45,7 @@ public class Alien : MonoBehaviour
         wLeft = true;
         wRight = true;
         wDown = true;
-        
+
         RaycastHit[] hits = Physics.RaycastAll(transform.position, -transform.right * 20f);
         foreach (RaycastHit hit in hits)
         {
@@ -55,7 +55,7 @@ public class Alien : MonoBehaviour
                 break;
             }
         }
-        
+
         hits = Physics.RaycastAll(transform.position, transform.right * 20f);
         foreach (RaycastHit hit in hits)
         {
@@ -80,12 +80,12 @@ public class Alien : MonoBehaviour
     {
         wLeft = true;
     }
-    
+
     public void SetCastBorderRight()
     {
         wRight = true;
     }
-    
+
     public void SetCastBorderDown()
     {
         wDown = true;
@@ -146,7 +146,7 @@ public class Alien : MonoBehaviour
             meshRenderer.material.SetFloat("_Effect", value);
         }
 
-        Camera.main.GetComponent<CameraShake>().LaunchShake();
+        //Camera.main.GetComponent<CameraShake>().LaunchShake();
         Destroy(gameObject);
     }
 

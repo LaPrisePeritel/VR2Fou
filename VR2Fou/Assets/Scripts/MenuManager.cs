@@ -11,7 +11,7 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
-        playButton.Event.AddListener(() => SceneManager.LoadScene("GameScene"));
+        playButton.Event.AddListener(() => SceneManager.LoadScene("BasicProto"));
         quitButton.Event.AddListener(Application.Quit);
         //optionsButton.Event.AddListener();
     }

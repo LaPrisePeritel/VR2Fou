@@ -5,17 +5,17 @@ using UnityEngine.Events;
 
 public class Buttons : MonoBehaviour
 {
-    private Animation animation;
+    private Animator animator;
     [HideInInspector] public UnityEvent Event;
 
     private void Start()
     {
-        animation = GetComponent<Animation>();
+        animator = GetComponent<Animator>();
     }
 
     private void OnMouseDown()
     {
         Event.Invoke();
-        animation.Play();
+        animator.SetTrigger("ButtonClicked");
     }
 }
