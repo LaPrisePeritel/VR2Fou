@@ -12,8 +12,8 @@ public class Alien : MonoBehaviour
     private Vector3 leftBorder, rightBorder, downBorder;
     private bool wLeft, wRight, wDown;
 
-    [SerializeField]
-    private ParticleSystem deathParticle;
+    [SerializeField] private ParticleSystem deathParticle;
+    [SerializeField] private LayerMask aliensMask;
 
     private bool isDead;
     private float deathDuration = 0;
@@ -46,7 +46,7 @@ public class Alien : MonoBehaviour
         wRight = true;
         wDown = true;
         
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, -transform.right * 20f);
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, -transform.right, 20f, aliensMask);
         foreach (RaycastHit hit in hits)
         {
             if (hit.transform.parent.gameObject != this)
@@ -56,7 +56,7 @@ public class Alien : MonoBehaviour
             }
         }
         
-        hits = Physics.RaycastAll(transform.position, transform.right * 20f);
+        hits = Physics.RaycastAll(transform.position, transform.right, 20f, aliensMask);
         foreach (RaycastHit hit in hits)
         {
             if (hit.transform.parent.gameObject != this)
@@ -65,7 +65,8 @@ public class Alien : MonoBehaviour
                 break;
             }
         }
-        hits = Physics.RaycastAll(transform.position, -transform.up * 20f);
+        
+        hits = Physics.RaycastAll(transform.position, -transform.up, 20f, aliensMask);
         foreach (RaycastHit hit in hits)
         {
             if (hit.transform.parent.gameObject != this)
@@ -130,28 +131,10 @@ public class Alien : MonoBehaviour
 
         transform.GetChild(0).GetComponent<Collider>().enabled = false;
         transform.SetParent(null);
-        
-        if (wLeft)
-        {
-            RaycastHit[] hits = Physics.RaycastAll(transform.position, -transform.right * 5f);
-            foreach (RaycastHit hit in hits)
-            {
-                if (hit.transform.parent.gameObject != this)
-                {
-                    Alien alien = hit.transform.parent.gameObject.GetComponent<Alien>();
 
-                    if (alien != null)
-                    {
-                        alien.SetCastBorderLeft();
-                        break;
-                    }
-                }
-            }
-        }
-        
         if (wLeft)
         {
-            RaycastHit[] hits = Physics.RaycastAll(transform.position, -transform.right * 20f);
+            RaycastHit[] hits = Physics.RaycastAll(transform.position, -transform.right, 20f, aliensMask);
             foreach (RaycastHit hit in hits)
             {
                 if (hit.transform.parent.gameObject != this)
@@ -169,7 +152,7 @@ public class Alien : MonoBehaviour
         
         if (wRight)
         {
-            RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.right * 20f);
+            RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.right, 20f, aliensMask);
             foreach (RaycastHit hit in hits)
             {
                 if (hit.transform.parent.gameObject != this)
@@ -187,7 +170,7 @@ public class Alien : MonoBehaviour
         
         if (wDown)
         {
-            RaycastHit[] hits = Physics.RaycastAll(transform.position, -transform.up * 20f);
+            RaycastHit[] hits = Physics.RaycastAll(transform.position, -transform.up, 20f, aliensMask);
             foreach (RaycastHit hit in hits)
             {
                 if (hit.transform.parent.gameObject != this)
@@ -208,6 +191,8 @@ public class Alien : MonoBehaviour
 
     private IEnumerator BlackHoleDeath(Vector3 _holePosition, Material _vacuumMaterial)
     {
+        Camera.main.GetComponent<CameraShake>().LaunchShake(.5f, 10f);
+        
         meshRenderer.material = _vacuumMaterial;
         meshRenderer.material.SetVector("_Black_Hole_Position", _holePosition);
 
@@ -221,8 +206,7 @@ public class Alien : MonoBehaviour
             float value = Mathf.Lerp(0f, 1f, t);
             meshRenderer.material.SetFloat("_Effect", value);
         }
-
-        Camera.main.GetComponent<CameraShake>().LaunchShake();
+        
         Destroy(gameObject);
     }
 

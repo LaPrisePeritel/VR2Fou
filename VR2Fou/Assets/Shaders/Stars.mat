@@ -49,10 +49,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _FresnelPower: 6
-    - _NoiseScale: 150
+    - _NoiseScale: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _ScrollSpeed: 0.001
+    - _ScrollSpeed: 0.005
     m_Colors:
     - _InnerColor: {r: 1.0039216, g: 1.4666667, b: 1.9215686, a: 0}
     - _OutterColor: {r: 1.4980392, g: 1.4980392, b: 1.4980392, a: 0}
