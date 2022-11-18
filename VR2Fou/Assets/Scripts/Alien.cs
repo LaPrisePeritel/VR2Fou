@@ -7,9 +7,10 @@ public class Alien : MonoBehaviour
     private MeshRenderer meshRenderer;
     private Animator animator;
 
-    private Action onTouchBorder, onDeath;
+    private Action onTouchBorder, onTouchDown, onDeath;
 
-    private Vector3 leftBorder, rightBorder;
+    private Vector3 leftBorder, rightBorder, downBorder;
+    private bool wLeft, wRight, wDown;
 
     [SerializeField]
     private ParticleSystem deathParticle;
@@ -28,13 +29,66 @@ public class Alien : MonoBehaviour
         meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
     }
 
-    public void Initialisation(Action _onTouchBorder, Vector3 _leftBorder, Vector3 _rightBorder, Action _onDeath)
+    public void Initialisation(Action _onTouchBorder, Action _onTouchDown, Vector3 _leftBorder, Vector3 _rightBorder, Vector3 _downBorder, Action _onDeath)
     {
         onTouchBorder = _onTouchBorder;
+        onTouchDown = _onTouchDown;
         leftBorder = _leftBorder;
         rightBorder = _rightBorder;
+        downBorder = _downBorder;
 
         onDeath = _onDeath;
+    }
+
+    public void InitializeBorders()
+    {
+        wLeft = true;
+        wRight = true;
+        wDown = true;
+        
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, -transform.right * 20f);
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.transform.parent.gameObject != this)
+            {
+                wLeft = false;
+                break;
+            }
+        }
+        
+        hits = Physics.RaycastAll(transform.position, transform.right * 20f);
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.transform.parent.gameObject != this)
+            {
+                wRight = false;
+                break;
+            }
+        }
+        hits = Physics.RaycastAll(transform.position, -transform.up * 20f);
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.transform.parent.gameObject != this)
+            {
+                wDown = false;
+                break;
+            }
+        }
+    }
+
+    public void SetCastBorderLeft()
+    {
+        wLeft = true;
+    }
+    
+    public void SetCastBorderRight()
+    {
+        wRight = true;
+    }
+    
+    public void SetCastBorderDown()
+    {
+        wDown = true;
     }
 
     public void AddOnDeathAction(Action _onDeath)
@@ -47,14 +101,21 @@ public class Alien : MonoBehaviour
         if (isDead)
             return;
         
-        if (transform.position.x + transform.localScale.x / 2f >= rightBorder.x)
+        if (wRight && transform.position.x + transform.localScale.x / 2f >= rightBorder.x)
         {
             onTouchBorder();
         }
-        else if (transform.position.x - transform.localScale.x / 2f <= leftBorder.x)
+        
+        if (wLeft && transform.position.x - transform.localScale.x / 2f <= leftBorder.x)
         {
             onTouchBorder();
         }
+        
+        if (wDown && transform.position.x - transform.localScale.x / 2f <= downBorder.x)
+        {
+            onTouchDown();
+        }
+        
         /*if (isDead)
         {
             deathDuration += Time.deltaTime;
@@ -73,7 +134,79 @@ public class Alien : MonoBehaviour
     private void OnDeath()
     {
         isDead = true;
-        deathParticle.Play();
+        if (wLeft)
+        {
+            RaycastHit[] hits = Physics.RaycastAll(transform.position, -transform.right * 5f);
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.transform.parent.gameObject != this)
+                {
+                    Alien alien = hit.transform.parent.gameObject.GetComponent<Alien>();
+
+                    if (alien != null)
+                    {
+                        alien.SetCastBorderLeft();
+                        break;
+                    }
+                }
+            }
+        }
+        
+        if (wLeft)
+        {
+            RaycastHit[] hits = Physics.RaycastAll(transform.position, -transform.right * 20f);
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.transform.parent.gameObject != this)
+                {
+                    Alien alien = hit.transform.parent.gameObject.GetComponent<Alien>();
+
+                    if (alien != null)
+                    {
+                        alien.SetCastBorderLeft();
+                        break;
+                    }
+                }
+            }
+        }
+        
+        if (wRight)
+        {
+            RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.right * 20f);
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.transform.parent.gameObject != this)
+                {
+                    Alien alien = hit.transform.parent.gameObject.GetComponent<Alien>();
+
+                    if (alien != null)
+                    {
+                        alien.SetCastBorderRight();
+                        break;
+                    }
+                }
+            }
+        }
+        
+        if (wDown)
+        {
+            RaycastHit[] hits = Physics.RaycastAll(transform.position, -transform.up * 20f);
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.transform.parent.gameObject != this)
+                {
+                    Alien alien = hit.transform.parent.gameObject.GetComponent<Alien>();
+
+                    if (alien != null)
+                    {
+                        alien.SetCastBorderDown();
+                        break;
+                    }
+                }
+            }
+        }
+        
+        //deathParticle.Play();
     }
 
     private IEnumerator BlackHoleDeath(Vector3 _holePosition, Material _vacuumMaterial)
@@ -100,7 +233,7 @@ public class Alien : MonoBehaviour
         if (isDead)
             return;
         
-        isDead = true; //TEMP
+        OnDeath();
         
         StopAllCoroutines();
         
