@@ -27,6 +27,11 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
+    public void End(bool _victory)
+    {
+        Debug.Log($"Victory: {_victory}");
+    }
+
     #region Score
 
     public void IncrementScore()
