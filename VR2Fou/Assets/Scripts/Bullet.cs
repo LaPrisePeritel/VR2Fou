@@ -12,8 +12,8 @@ public class Bullet : MonoBehaviour
     }
     
     private const float LIFETIME = 5.0f;
-    private const float CAMERA_SHAKE_DURATION = 1.0f;
-    private const float CAMERA_SHAKE_MAGNITUDE = 3.0f;
+    private const float CAMERA_SHAKE_DURATION = .5f;
+    private const float CAMERA_SHAKE_MAGNITUDE = 1.2f;
 
     private Vector3 direction;
 

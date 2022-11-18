@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -26,7 +25,18 @@ public class BoardMovement : MonoBehaviour
     [SerializeField] private float horizontalSpeed;
     [SerializeField] private float verticalSpeed;
     [SerializeField] private float increaseSpeedPerDeath;
-    
+
+    [Header("Acceleration")]
+    [SerializeField] private AnimationCurve accelerationCurve;
+    [SerializeField] Vector2 randomSpacingBetweenAccelerations;
+    private float timeBeforeNextAcceleration;
+    [SerializeField] private float acceleration;
+    [SerializeField] private float durationAccelerationValue;
+    private float durationAcceleration;
+    private bool accelerate;
+
+
+
     private void Awake()
     {
         ship = FindObjectOfType<Ship>();
@@ -41,6 +51,8 @@ public class BoardMovement : MonoBehaviour
             : 1f;
         
         SpawnAliens();
+        timeBeforeNextAcceleration = Random.Range(randomSpacingBetweenAccelerations.x, randomSpacingBetweenAccelerations.y);
+        durationAccelerationValue = accelerationCurve.keys[^1].time;
     }
 
     private void SpawnAliens()
@@ -102,6 +114,19 @@ public class BoardMovement : MonoBehaviour
     private void Update()
     {
         transform.position += moveDirection * hSpeed * Time.deltaTime * Vector3.right;
+
+        timeBeforeNextAcceleration -= Time.deltaTime;
+        if (timeBeforeNextAcceleration <= 0 && !accelerate)
+            Accelerate();
+
+        if(accelerate)
+        {
+            hSpeed = horizontalSpeed + acceleration * accelerationCurve.Evaluate(durationAcceleration);
+            vSpeed = verticalSpeed + acceleration * accelerationCurve.Evaluate(durationAcceleration);
+            durationAcceleration += Time.deltaTime;
+            if (durationAcceleration >= durationAccelerationValue && accelerate)
+                Decelerate();
+        }
     }
 
     private void LateUpdate()
@@ -124,6 +149,17 @@ public class BoardMovement : MonoBehaviour
     {
         hSpeed += increaseSpeedPerDeath;
         vSpeed += increaseSpeedPerDeath;
+    }
+
+    private void Accelerate()
+    {
+        durationAcceleration = 0;
+        accelerate = true;
+    }
+    private void Decelerate()
+    {
+        timeBeforeNextAcceleration = Random.Range(randomSpacingBetweenAccelerations.x, randomSpacingBetweenAccelerations.y);
+        accelerate = false;
     }
 
     private IEnumerator DownDirection()
