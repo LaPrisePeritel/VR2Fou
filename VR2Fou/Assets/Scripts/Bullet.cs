@@ -10,27 +10,15 @@ public class Bullet : MonoBehaviour
         Laser,
         BlackHole
     }
-    
-    private const float LIFETIME = 5.0f;
-    private const float CAMERA_SHAKE_DURATION = .5f;
-    private const float CAMERA_SHAKE_MAGNITUDE = 1.2f;
 
     private Vector3 direction;
-
-    private CameraShake cameraShake;
 
     public EBulletType bulletType;
 
     [SerializeField][Range(0, 2.0f)]private float bulletSpeed;
 
-    private void Start()
+    public void Initiate(Vector3 dir, Vector3 initPos)
     {
-        Destroy(gameObject, LIFETIME);
-    }
-
-    public void Initiate(Camera camera, Vector3 dir, Vector3 initPos)
-    {
-        cameraShake = camera.GetComponent<CameraShake>();
         transform.position = initPos;
         direction = dir * bulletSpeed;
     }
@@ -46,7 +34,7 @@ public class Bullet : MonoBehaviour
             return;
 
         other.transform.parent.GetComponent<Alien>().Hitted(bulletType, transform.position);
-        
+
         Destroy(gameObject);
     }
 }

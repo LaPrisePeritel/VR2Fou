@@ -71,8 +71,10 @@ public class BoardMovement : MonoBehaviour
                                             Vector3.right * spaceBetweenAliens * (j + 0.5f);
                     aliens[i, j + columns / 2] = Instantiate(aliensPrefab, alienPosition, Quaternion.identity);
                     aliens[i, j + columns / 2].Initialisation(ChangeDirection,
+                        () => GameManager.instance.End(false),
                         startPosition + Vector3.left * leftBorderOffset,
                         startPosition + Vector3.right * rightBorderOffset,
+                        ship.transform.position,
                         AliensIncreaseSpeed);
                     aliens[i, j + columns / 2].transform.parent = transform;
                 }
@@ -88,12 +90,19 @@ public class BoardMovement : MonoBehaviour
                                             Vector3.right * spaceBetweenAliens * (j + 1);
                     aliens[i, j + columns / 2 + 1] = Instantiate(aliensPrefab, alienPosition, Quaternion.identity);
                     aliens[i, j + columns / 2 + 1].Initialisation(ChangeDirection,
+                        () => GameManager.instance.End(false),
                         startPosition + Vector3.left * leftBorderOffset,
                         startPosition + Vector3.right * rightBorderOffset,
+                        ship.transform.position,
                         AliensIncreaseSpeed);
                     aliens[i, j + columns / 2 + 1].transform.parent = transform;
                 }
             }
+        }
+
+        foreach (Alien alien in aliens)
+        {
+            alien.InitializeBorders();
         }
     }
 
