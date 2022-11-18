@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
         Destroy(gameObject);
 
         instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public void End(bool _victory)
@@ -43,18 +42,4 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion Score
-
-    #region "Menu"
-
-    public void Play()
-    {
-        SceneManager.LoadScene("GameScene");
-    }
-
-    public void Quit()
-    {
-        Application.Quit();
-    }
-
-    #endregion "Menu"
 }
