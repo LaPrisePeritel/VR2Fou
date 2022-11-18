@@ -23,7 +23,7 @@ public class Alien : MonoBehaviour
     private void Awake()
     {
         deathParticle.Stop();
-        
+
         animator = GetComponent<Animator>();
         meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
     }
@@ -46,7 +46,7 @@ public class Alien : MonoBehaviour
     {
         if (isDead)
             return;
-        
+
         if (transform.position.x + transform.localScale.x / 2f >= rightBorder.x)
         {
             onTouchBorder();
@@ -64,7 +64,7 @@ public class Alien : MonoBehaviour
             }
         }*/
     }
-    
+
     private void OnDestroy()
     {
         GameManager.instance.IncrementScore();
@@ -80,18 +80,19 @@ public class Alien : MonoBehaviour
     {
         meshRenderer.material = _vacuumMaterial;
         meshRenderer.material.SetVector("_Black_Hole_Position", _holePosition);
-        
+
         float t = 0f;
 
         while (t <= 1f)
         {
             yield return null;
-            
+
             t += Time.deltaTime;
             float value = Mathf.Lerp(0f, 1f, t);
             meshRenderer.material.SetFloat("_Effect", value);
         }
-        
+
+        Camera.main.GetComponent<CameraShake>().LaunchShake();
         Destroy(gameObject);
     }
 
@@ -99,11 +100,11 @@ public class Alien : MonoBehaviour
     {
         if (isDead)
             return;
-        
+
         isDead = true; //TEMP
-        
+
         StopAllCoroutines();
-        
+
         switch (_bulletType)
         {
             case Bullet.EBulletType.BlackHole:
@@ -111,7 +112,7 @@ public class Alien : MonoBehaviour
                 break;
         }
     }
-    
+
     /*private void OnCollisionEnter(Collision c)
     {
         if (c.collider.CompareTag("Bullet"))

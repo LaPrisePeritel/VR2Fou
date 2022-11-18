@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
         Destroy(gameObject);
 
         instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     #region Score
@@ -38,18 +37,4 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion Score
-
-    #region "Menu"
-
-    public void Play()
-    {
-        SceneManager.LoadScene("GameScene");
-    }
-
-    public void Quit()
-    {
-        Application.Quit();
-    }
-
-    #endregion "Menu"
 }
