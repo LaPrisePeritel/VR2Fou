@@ -134,6 +134,10 @@ public class Alien : MonoBehaviour
     private void OnDeath()
     {
         isDead = true;
+
+        transform.GetChild(0).GetComponent<Collider>().enabled = false;
+        transform.SetParent(null);
+        
         if (wLeft)
         {
             RaycastHit[] hits = Physics.RaycastAll(transform.position, -transform.right * 5f);
