@@ -12,8 +12,8 @@ public class Alien : MonoBehaviour
     private Vector3 leftBorder, rightBorder, downBorder;
     private bool wLeft, wRight, wDown;
 
-    [SerializeField]
-    private ParticleSystem deathParticle;
+    [SerializeField] private ParticleSystem deathParticle;
+    [SerializeField] private LayerMask aliensMask;
 
     private bool isDead;
     private float deathDuration = 0;
@@ -45,8 +45,8 @@ public class Alien : MonoBehaviour
         wLeft = true;
         wRight = true;
         wDown = true;
-
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, -transform.right * 20f);
+        
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, -transform.right, 20f, aliensMask);
         foreach (RaycastHit hit in hits)
         {
             if (hit.transform.parent.gameObject != this)
@@ -55,8 +55,8 @@ public class Alien : MonoBehaviour
                 break;
             }
         }
-
-        hits = Physics.RaycastAll(transform.position, transform.right * 20f);
+        
+        hits = Physics.RaycastAll(transform.position, transform.right, 20f, aliensMask);
         foreach (RaycastHit hit in hits)
         {
             if (hit.transform.parent.gameObject != this)
@@ -65,7 +65,8 @@ public class Alien : MonoBehaviour
                 break;
             }
         }
-        hits = Physics.RaycastAll(transform.position, -transform.up * 20f);
+        
+        hits = Physics.RaycastAll(transform.position, -transform.up, 20f, aliensMask);
         foreach (RaycastHit hit in hits)
         {
             if (hit.transform.parent.gameObject != this)
@@ -132,6 +133,8 @@ public class Alien : MonoBehaviour
 
     private IEnumerator BlackHoleDeath(Vector3 _holePosition, Material _vacuumMaterial)
     {
+        Camera.main.GetComponent<CameraShake>().LaunchShake(.5f, 10f);
+        
         meshRenderer.material = _vacuumMaterial;
         meshRenderer.material.SetVector("_Black_Hole_Position", _holePosition);
 
@@ -145,8 +148,9 @@ public class Alien : MonoBehaviour
             float value = Mathf.Lerp(0f, 1f, t);
             meshRenderer.material.SetFloat("_Effect", value);
         }
+        
 
-        //Camera.main.GetComponent<CameraShake>().LaunchShake();
+        Camera.main.GetComponent<CameraShake>().LaunchShake(0.5f, 0.3f);
         Destroy(gameObject);
     }
 
@@ -163,6 +167,9 @@ public class Alien : MonoBehaviour
         {
             case Bullet.EBulletType.BlackHole:
                 StartCoroutine(BlackHoleDeath(_bulletPosition, vacuumMaterial));
+                break;
+            case Bullet.EBulletType.Laser:
+                Destroy(gameObject);
                 break;
         }
     }

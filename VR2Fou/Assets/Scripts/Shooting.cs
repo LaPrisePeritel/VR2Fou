@@ -1,31 +1,19 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
-    private Vector3 shootingDirection;
-
     [SerializeField]
-    private Bullet prefabBullet;
+    private List<Bullet> prefabsBullet;
 
-    [SerializeField]
-    [Range(0.1f, 2.0f)]
-    private float speedBullet;
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-        shootingDirection = transform.forward;
-    }
 
     // Update is called once per frame
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.UpArrow))
         {
-            Bullet b = Instantiate(prefabBullet);
-            b.Initiate(transform.up * speedBullet, transform.position);
+            Bullet b = Instantiate(prefabsBullet[Random.Range(0, prefabsBullet.Count)]);
+            b.Initiate(transform.up, transform.position);
         }
     }
 }
