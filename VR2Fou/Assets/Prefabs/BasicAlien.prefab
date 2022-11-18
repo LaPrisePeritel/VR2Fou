@@ -4994,7 +4994,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fa5073301cb9dd745ac31dd25bf70d71, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5041,22 +5041,22 @@ TrailRenderer:
         inWeight: 0
         outWeight: 0.46314916
       - serializedVersion: 3
-        time: 0.83261806
+        time: 1
         value: 0.06249997
-        inSlope: 0
-        outSlope: 0
+        inSlope: -0.91015625
+        outSlope: -0.91015625
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.5052713
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 0.101122975, g: 1, b: 0, a: 1}
+      key1: {r: 0.82097703, g: 1, b: 0.7688679, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -5072,7 +5072,7 @@ TrailRenderer:
       ctime7: 0
       atime0: 0
       atime1: 65535
-      atime2: 0
+      atime2: 65535
       atime3: 0
       atime4: 0
       atime5: 0
