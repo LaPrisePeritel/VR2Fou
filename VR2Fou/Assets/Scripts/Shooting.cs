@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
-    private Camera mainCamera;
     private Vector3 shootingDirection;
 
     [SerializeField]
@@ -18,7 +17,6 @@ public class Shooting : MonoBehaviour
     private void Start()
     {
         shootingDirection = transform.forward;
-        mainCamera = Camera.main;
     }
 
     // Update is called once per frame
@@ -27,7 +25,7 @@ public class Shooting : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             Bullet b = Instantiate(prefabBullet);
-            b.Initiate(mainCamera, transform.up * speedBullet, transform.position);
+            b.Initiate(transform.up * speedBullet, transform.position);
         }
     }
 }
