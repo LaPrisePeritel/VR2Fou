@@ -246,12 +246,15 @@ public class Alien : MonoBehaviour
         }
     }
 
-    /*private void OnCollisionEnter(Collision c)
+    private void OnCollisionEnter(Collision c)
     {
         if (c.collider.CompareTag("Bullet"))
         {
-            Destroy(c.gameObject);
-            animator.SetTrigger("Death");
+            if(c.gameObject.GetComponent<Bullet>().bulletType == Bullet.EBulletType.Lightning)
+            {
+                Destroy(gameObject);
+                Destroy(c.gameObject);
+            }
         }
-    }*/
+    }
 }
