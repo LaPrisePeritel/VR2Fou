@@ -8,7 +8,9 @@ public class Bullet : MonoBehaviour
     public enum EBulletType
     {
         Laser,
-        BlackHole
+        BlackHole,
+        Balloon,
+        Dust
     }
 
     private Vector3 direction;
