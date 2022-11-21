@@ -236,7 +236,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c1fc0fa71c0539344a0621a8a6e8640a, type: 2}
+  - {fileID: 2100000, guid: 8f665fc23152b3c41a8a92ef9d3cceb8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1339,7 +1339,7 @@ MonoBehaviour:
   prefabsBullet:
   - {fileID: 3884862862415128373, guid: 788d642bd7a709e4cb508713576d0f98, type: 3}
   - {fileID: 3884862862415128373, guid: 590bb1401677ef0439d8cc61ad796d9d, type: 3}
-  speedBullet: 0.2
+  - {fileID: 3884862862415128373, guid: fceb2db30df69204899ac1072576f94b, type: 3}
 --- !u!114 &1433246201
 MonoBehaviour:
   m_ObjectHideFlags: 0

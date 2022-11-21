@@ -20,6 +20,11 @@ public class Alien : MonoBehaviour
 
     [Header("Materials")]
     [SerializeField] private Material vacuumMaterial;
+    [SerializeField] private Material balloonMaterial;
+
+    [Header("Particles")]
+    [SerializeField] private ParticleSystem confettiParticlesPrefab;
+    [SerializeField] private ParticleSystem dustParticlesPrefab;
 
     private void Awake()
     {
@@ -149,8 +154,77 @@ public class Alien : MonoBehaviour
             meshRenderer.material.SetFloat("_Effect", value);
         }
         
+        //Camera.main.GetComponent<CameraShake>().LaunchShake(0.5f, 0.3f);
+        Destroy(gameObject);
+    }
 
-        Camera.main.GetComponent<CameraShake>().LaunchShake(0.5f, 0.3f);
+    private void StartBalloonDissolve()
+    {
+        StartCoroutine(BalloonDeath(balloonMaterial));
+    }
+    
+    private IEnumerator BalloonDeath(Material _baloonMaterial)
+    {
+        meshRenderer.material = _baloonMaterial;
+        //meshRenderer.material.SetVector("_Black_Hole_Position", _holePosition);
+
+        bool particlePlayed = false;
+        ParticleSystem confettiParticles = Instantiate(confettiParticlesPrefab, transform.position, Quaternion.identity);
+        
+        float t = 0f;
+
+        while (t <= 1f)
+        {
+            yield return null;
+
+            t += Time.deltaTime * 5f;
+            float value = Mathf.Lerp(0f, 1f, t);
+            meshRenderer.material.SetFloat("_Dissolve", value);
+
+            if (!particlePlayed && value >= 0.75f)
+            {
+                Camera.main.GetComponent<CameraShake>().LaunchShake(0.2f, 0.3f);
+                confettiParticles.Play();
+                particlePlayed = true;
+            }
+        }
+
+        while (confettiParticles.IsAlive())
+        {
+            yield return null;
+        }
+
+        //Camera.main.GetComponent<CameraShake>().LaunchShake(0.5f, 0.3f);
+        Destroy(confettiParticles.gameObject);
+        Destroy(gameObject);
+    }
+
+    private IEnumerator BeingDust(Material _material)
+    {
+        meshRenderer.material = _material;
+        
+        ParticleSystem dustParticles = Instantiate(dustParticlesPrefab, transform.position, Quaternion.identity);
+        dustParticles.Play();
+        
+        float t = 0f;
+
+        while (t <= 1f)
+        {
+            yield return null;
+
+            t += Time.deltaTime * 5f;
+            float value = Mathf.Lerp(0f, 1f, t);
+            meshRenderer.material.SetFloat("_Dissolve", value);
+        }
+        
+        dustParticles.Stop();
+        
+        while (dustParticles.IsAlive())
+        {
+            yield return null;
+        }
+        
+        Destroy(dustParticles.gameObject);
         Destroy(gameObject);
     }
 
@@ -161,6 +235,8 @@ public class Alien : MonoBehaviour
 
         isDead = true; //TEMP
 
+        transform.parent = null;
+
         StopAllCoroutines();
 
         switch (_bulletType)
@@ -168,18 +244,18 @@ public class Alien : MonoBehaviour
             case Bullet.EBulletType.BlackHole:
                 StartCoroutine(BlackHoleDeath(_bulletPosition, vacuumMaterial));
                 break;
+            
             case Bullet.EBulletType.Laser:
                 Destroy(gameObject);
                 break;
+            
+            case Bullet.EBulletType.Balloon:
+                animator.SetTrigger("BalloonDeath");
+                break;
+            
+            case Bullet.EBulletType.Dust:
+                StartCoroutine(BeingDust(balloonMaterial));
+                break;
         }
     }
-
-    /*private void OnCollisionEnter(Collision c)
-    {
-        if (c.collider.CompareTag("Bullet"))
-        {
-            Destroy(c.gameObject);
-            animator.SetTrigger("Death");
-        }
-    }*/
 }
