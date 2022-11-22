@@ -25,6 +25,7 @@ public class Alien : MonoBehaviour
     [Header("Particles")]
     [SerializeField] private ParticleSystem confettiParticlesPrefab;
     [SerializeField] private ParticleSystem dustParticlesPrefab;
+    [SerializeField] private ParticleSystem lightningParticlesPrefab;
 
     private void Awake()
     {
@@ -222,6 +223,24 @@ public class Alien : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private IEnumerator Lightning()
+    {
+        Camera.main.GetComponent<CameraShake>().LaunchShake(0.3f, 0.5f);
+        ParticleSystem lightingParts = Instantiate(lightningParticlesPrefab, transform.position, Quaternion.identity);
+        lightingParts.Play();
+        float t = 0f;
+
+        while (t <= lightingParts.main.duration)
+        {
+            yield return null;
+
+            t += Time.deltaTime;
+            float value = Mathf.Lerp(0f, 1f, t);
+            meshRenderer.material.SetFloat("_Effect", value);
+        }
+        Destroy(lightingParts.gameObject);
+        Destroy(gameObject);
+    }
     public void Hitted(Bullet.EBulletType _bulletType, Vector3 _bulletPosition)
     {
         if (isDead)
@@ -244,6 +263,9 @@ public class Alien : MonoBehaviour
                 StartCoroutine(BlackHoleDeath(_bulletPosition, vacuumMaterial));
                 break;
             case Bullet.EBulletType.Laser:
+                Destroy(gameObject);
+                break;
+            case Bullet.EBulletType.Lightning:
                 Destroy(gameObject);
                 break;
 

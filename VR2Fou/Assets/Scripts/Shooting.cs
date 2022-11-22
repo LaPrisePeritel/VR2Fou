@@ -35,7 +35,7 @@ public class Shooting : MonoBehaviour
 
     private void ShootSpecial()
     {
-        //Add effects with special shoot
+        //TODO : Add effects with special shoot
         shootSpecial = true;
     }
 }

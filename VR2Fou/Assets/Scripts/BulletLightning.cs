@@ -9,9 +9,6 @@ public class BulletLightning : Bullet
         if(other.TryGetComponent(out Alien alien))
         {
             alien.Hitted(bulletType, transform.position); 
-            //ParticleSystem ps = GetComponent<ParticleSystem>();
-            //var coll = ps.collision;
-            //coll.enabled = false;
         }
     }
 
