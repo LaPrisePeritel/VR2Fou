@@ -10,6 +10,8 @@ public class Bullet : MonoBehaviour
         Laser,
         BlackHole,
         Lightning
+        Balloon,
+        Dust
     }
 
     protected Vector3 direction;
