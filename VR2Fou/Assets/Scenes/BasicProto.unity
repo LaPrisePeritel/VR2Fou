@@ -476,42 +476,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.88414836
-      value: 0.7919706
-      inSlope: 2.5693712
-      outSlope: 2.5693712
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1.1569107
-      value: 0.98743516
-      inSlope: -0.029663369
-      outSlope: -0.029663369
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.9515137
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1.3346703
-      value: 0.7852466
-      inSlope: -2.2868776
-      outSlope: -2.2868776
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1.5050507
-      value: 0.006134033
+      time: 1.0062714
+      value: -0.0048980713
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1219,15 +1192,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1045848415}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 0, z: 0.7}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.02, y: 0.8, z: 0.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 963194228}
   m_Father: {fileID: 1725982594}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &1088577500
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,12 +1245,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82cd9387c5a37f146b04c3c0188578bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabBullet: {fileID: 3884862862415128373, guid: 788d642bd7a709e4cb508713576d0f98,
+  prefabBullet: {fileID: 1305927853706134372, guid: 8fae210c0710c5c4ca28bea5de29663d,
     type: 3}
   prefabsBullet:
-  - {fileID: 1305927853706134372, guid: 8fae210c0710c5c4ca28bea5de29663d, type: 3}
-  - {fileID: 3884862862415128373, guid: 590bb1401677ef0439d8cc61ad796d9d, type: 3}
   - {fileID: 3884862862415128373, guid: fceb2db30df69204899ac1072576f94b, type: 3}
+  - {fileID: 3884862862415128373, guid: 590bb1401677ef0439d8cc61ad796d9d, type: 3}
 --- !u!1 &1433246195
 GameObject:
   m_ObjectHideFlags: 0
