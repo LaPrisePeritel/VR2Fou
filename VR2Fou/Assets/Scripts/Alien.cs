@@ -124,12 +124,6 @@ public class Alien : MonoBehaviour
             }
         }*/
     }
-
-    private void OnDestroy()
-    {
-        GameManager.instance.IncrementScore();
-    }
-
     private void OnDeath()
     {
         isDead = true;
@@ -212,7 +206,7 @@ public class Alien : MonoBehaviour
         {
             yield return null;
 
-            t += Time.deltaTime * 5f;
+            t += Time.deltaTime;
             float value = Mathf.Lerp(0f, 1f, t);
             meshRenderer.material.SetFloat("_Dissolve", value);
         }
@@ -235,12 +229,12 @@ public class Alien : MonoBehaviour
 
         isDead = true; //TEMP
 
-        GameManager.instance.IncrementScore();
+        GameManager.instance.IncrementCombo();
 
         transform.parent = null;
 
         StopAllCoroutines();
-
+        
         switch (_bulletType)
         {
             default:
