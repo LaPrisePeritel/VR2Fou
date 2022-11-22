@@ -206,7 +206,7 @@ public class Alien : MonoBehaviour
         {
             yield return null;
 
-            t += Time.deltaTime * 5f;
+            t += Time.deltaTime;
             float value = Mathf.Lerp(0f, 1f, t);
             meshRenderer.material.SetFloat("_Dissolve", value);
         }
@@ -234,7 +234,7 @@ public class Alien : MonoBehaviour
         transform.parent = null;
 
         StopAllCoroutines();
-
+        
         switch (_bulletType)
         {
             default:
