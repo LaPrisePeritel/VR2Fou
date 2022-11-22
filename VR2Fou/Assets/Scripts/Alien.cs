@@ -124,12 +124,6 @@ public class Alien : MonoBehaviour
             }
         }*/
     }
-
-    private void OnDestroy()
-    {
-        GameManager.instance.IncrementScore();
-    }
-
     private void OnDeath()
     {
         isDead = true;
@@ -235,7 +229,7 @@ public class Alien : MonoBehaviour
 
         isDead = true; //TEMP
 
-        GameManager.instance.IncrementScore();
+        GameManager.instance.IncrementCombo();
 
         transform.parent = null;
 
