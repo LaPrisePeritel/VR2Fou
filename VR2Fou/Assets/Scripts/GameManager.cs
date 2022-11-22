@@ -1,17 +1,19 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    [Header("Score")]
-    [SerializeField]
-    private TMP_Text ScoreText;
-
+    [Header("Combo")]
+    public int GaugeRequired = 1;
+    public int CurrentGauge;
+     [HideInInspector]
+    public float ComboGauge;
     public float score { get; private set; }
+
+    [Header("Shoot")]
+    public UnityEvent EvCombo;
 
     [Header("Timer")]
     public float timer;
@@ -34,11 +36,15 @@ public class GameManager : MonoBehaviour
 
     #region Score
 
-    public void IncrementScore()
+    public void IncrementCombo()
     {
-        score++;
-        if (ScoreText != null)
-            ScoreText.text = score.ToString();
+        CurrentGauge++;
+        if(CurrentGauge >= GaugeRequired)
+        {
+            EvCombo.Invoke();
+            CurrentGauge = 0;
+        }
+        ComboGauge = CurrentGauge / GaugeRequired;
     }
 
     #endregion Score

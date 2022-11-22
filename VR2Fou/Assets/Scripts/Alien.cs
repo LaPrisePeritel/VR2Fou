@@ -124,12 +124,6 @@ public class Alien : MonoBehaviour
             }
         }*/
     }
-
-    private void OnDestroy()
-    {
-        GameManager.instance.IncrementScore();
-    }
-
     private void OnDeath()
     {
         isDead = true;
@@ -235,24 +229,28 @@ public class Alien : MonoBehaviour
 
         isDead = true; //TEMP
 
+        GameManager.instance.IncrementCombo();
+
         transform.parent = null;
 
         StopAllCoroutines();
         
         switch (_bulletType)
         {
+            default:
+                Destroy(gameObject);
+                break;
             case Bullet.EBulletType.BlackHole:
                 StartCoroutine(BlackHoleDeath(_bulletPosition, vacuumMaterial));
                 break;
-            
             case Bullet.EBulletType.Laser:
                 Destroy(gameObject);
                 break;
-            
+
             case Bullet.EBulletType.Balloon:
                 animator.SetTrigger("BalloonDeath");
                 break;
-            
+
             case Bullet.EBulletType.Dust:
                 StartCoroutine(BeingDust(balloonMaterial));
                 break;
