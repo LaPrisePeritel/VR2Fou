@@ -3,39 +3,44 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
-    [SerializeField]
-    Bullet prefabBullet;
+    private const KeyCode DEBUG_KEY = KeyCode.B;
 
-    [SerializeField]
-    private List<Bullet> prefabsBullet;
+    [SerializeField] private Bullet defaultBullet;
+    [SerializeField] private List<Bullet> bullets;
 
-    private bool shootSpecial = false;
+    private Bullet currentBullet;
 
-    private void Awake()
-    {
-        GameManager.instance.EvCombo.AddListener(ShootSpecial);
-    }
-    // Update is called once per frame
+    private int currentBulletIndex = 1;
+    private bool isRandom;
+
+    private void Awake() => currentBullet = defaultBullet;
+
+    private void OnEnable() => GameManager.instance.EvCombo.AddListener(ShootSpecial);
+
+    private void OnDisable() => GameManager.instance.EvCombo.RemoveListener(ShootSpecial);
+
     private void Update()
     {
+        if (Input.GetKeyDown(DEBUG_KEY))
+            currentBullet = bullets[currentBulletIndex++ % bullets.Count];
+
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if (shootSpecial)
+            if (isRandom)
             {
-                Bullet b = Instantiate(prefabsBullet[Random.Range(0, prefabsBullet.Count)]);
-                shootSpecial = false;
+                currentBullet = bullets[Random.Range(0, bullets.Count)];
+                isRandom = false;
+                return;
             }
-            else
-            {
-                Bullet b = Instantiate(prefabBullet);
-                b.Initiate(transform.up, transform.position);
-            }
+
+            ShootCurrentBullet();
         }
     }
 
+    private void ShootCurrentBullet() => Instantiate(currentBullet).Initiate(transform.up, transform.position);
+
     private void ShootSpecial()
     {
-        //Add effects with special shoot
-        shootSpecial = true;
+        //TODO: Add effects with special shoot
     }
 }
