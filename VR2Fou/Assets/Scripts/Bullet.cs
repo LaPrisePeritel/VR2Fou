@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     {
         Laser,
         BlackHole,
-        Lightning
+        Lightning,
         Balloon,
         Dust
     }

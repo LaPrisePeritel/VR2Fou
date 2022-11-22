@@ -234,8 +234,8 @@ public class Alien : MonoBehaviour
             return;
 
         isDead = true; //TEMP
-        
-        GameManager.instance.c
+
+        GameManager.instance.IncrementScore();
 
         transform.parent = null;
 
