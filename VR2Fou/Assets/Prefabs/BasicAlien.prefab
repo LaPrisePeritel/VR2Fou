@@ -57,6 +57,8 @@ MonoBehaviour:
   balloonMaterial: {fileID: 2100000, guid: 8f665fc23152b3c41a8a92ef9d3cceb8, type: 2}
   confettiParticlesPrefab: {fileID: 2636611714588669859, guid: fe9588a64794def4ab7856d4d38e3c87,
     type: 3}
+  dustParticlesPrefab: {fileID: 1245649118154846029, guid: eb6731d1e1d99e84cbc4fc7730d0dcdf,
+    type: 3}
 --- !u!54 &3139901420595953446
 Rigidbody:
   m_ObjectHideFlags: 0
