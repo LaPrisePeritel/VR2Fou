@@ -8,10 +8,12 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [Header("Score")]
-    [SerializeField]
-    private TMP_Text ScoreText;
-
+    public int GaugeRequired;
+    public int CurrentGauge;
+     [HideInInspector]
+    public float ComboGauge;
     public float score { get; private set; }
+
 
     [Header("Timer")]
     public float timer;
@@ -36,9 +38,12 @@ public class GameManager : MonoBehaviour
 
     public void IncrementScore()
     {
-        score++;
-        if (ScoreText != null)
-            ScoreText.text = score.ToString();
+        CurrentGauge++;
+        if(CurrentGauge >= GaugeRequired)
+        {
+            CurrentGauge = 0;
+        }
+        ComboGauge = CurrentGauge / GaugeRequired;
     }
 
     #endregion Score

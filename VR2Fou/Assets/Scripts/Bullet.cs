@@ -12,24 +12,24 @@ public class Bullet : MonoBehaviour
         Lightning
     }
 
-    private Vector3 direction;
+    protected Vector3 direction;
 
     public EBulletType bulletType;
 
     [SerializeField][Range(0, 2.0f)]private float bulletSpeed;
 
-    public void Initiate(Vector3 dir, Vector3 initPos)
+    public virtual void Initiate(Vector3 dir, Vector3 initPos)
     {
         transform.position = initPos;
         direction = dir * bulletSpeed;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         transform.Translate(direction);
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Alien"))
             return;

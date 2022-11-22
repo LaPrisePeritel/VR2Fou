@@ -1268,9 +1268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabsBullet:
-  - {fileID: 3884862862415128373, guid: 788d642bd7a709e4cb508713576d0f98, type: 3}
-  - {fileID: 3884862862415128373, guid: 590bb1401677ef0439d8cc61ad796d9d, type: 3}
-  - {fileID: 1430331946263643600, guid: 8fae210c0710c5c4ca28bea5de29663d, type: 3}
+  - {fileID: 1305927853706134372, guid: 8fae210c0710c5c4ca28bea5de29663d, type: 3}
 --- !u!1 &1433246195
 GameObject:
   m_ObjectHideFlags: 0

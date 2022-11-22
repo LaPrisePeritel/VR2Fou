@@ -160,16 +160,18 @@ public class Alien : MonoBehaviour
             return;
 
         isDead = true; //TEMP
+        
+        GameManager.instance.c
 
         StopAllCoroutines();
 
         switch (_bulletType)
         {
+            default:
+                Destroy(gameObject);
+                break;
             case Bullet.EBulletType.BlackHole:
                 StartCoroutine(BlackHoleDeath(_bulletPosition, vacuumMaterial));
-                break;
-            case Bullet.EBulletType.Laser:
-                Destroy(gameObject);
                 break;
         }
     }
