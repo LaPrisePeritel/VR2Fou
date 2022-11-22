@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
-    private const KeyCode DEBUG_KEY = KeyCode.B;
+    private const KeyCode SWITCH_BULLET_KEY = KeyCode.B;
+    private const KeyCode SHOOT_KEY = KeyCode.Z;
 
     [SerializeField] private Bullet defaultBullet;
     [SerializeField] private List<Bullet> bullets;
@@ -21,15 +22,15 @@ public class Shooting : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(DEBUG_KEY))
-            currentBullet = bullets[currentBulletIndex++ % bullets.Count];
+        if (Input.GetKeyDown(SWITCH_BULLET_KEY))
+            SwitchBullet();
 
-        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(SHOOT_KEY))
         {
             if (isRandom)
             {
-                currentBullet = bullets[Random.Range(0, bullets.Count)];
                 isRandom = false;
+                currentBullet = bullets[Random.Range(0, bullets.Count)];
                 return;
             }
 
@@ -37,10 +38,12 @@ public class Shooting : MonoBehaviour
         }
     }
 
+    private void SwitchBullet() => currentBullet = bullets[currentBulletIndex++ % bullets.Count];
+
     private void ShootCurrentBullet() => Instantiate(currentBullet).Initiate(transform.up, transform.position);
 
     private void ShootSpecial()
     {
-        //TODO: Add effects with special shoot
+        //TODO: add effects with special shoot
     }
 }
