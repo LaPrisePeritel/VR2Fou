@@ -6,11 +6,14 @@ public class Alien : MonoBehaviour
 {
     private MeshRenderer meshRenderer;
     private Animator animator;
+    private Rigidbody rb;
+    public Rigidbody Rigidbody => rb;
 
-    private Action onTouchBorder, onTouchDown, onDeath;
+    private Action<int> onTouchBorder;
+    private Action onTouchDown, onDeath;
 
     private Vector3 leftBorder, rightBorder, downBorder;
-    private bool wLeft, wRight, wDown;
+    private int alienLineIndex;
 
     [SerializeField] private ParticleSystem deathParticle;
     [SerializeField] private LayerMask aliensMask;
@@ -31,70 +34,21 @@ public class Alien : MonoBehaviour
         deathParticle.Stop();
 
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
         meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
     }
 
-    public void Initialisation(Action _onTouchBorder, Action _onTouchDown, Vector3 _leftBorder, Vector3 _rightBorder, Vector3 _downBorder, Action _onDeath)
+    public void Initialisation(Action<int> _onTouchBorder, int _alienLineIndex, Action _onTouchDown, Vector3 _leftBorder, Vector3 _rightBorder, Vector3 _downBorder, Action _onDeath)
     {
         onTouchBorder = _onTouchBorder;
+        alienLineIndex = _alienLineIndex;
+        
         onTouchDown = _onTouchDown;
         leftBorder = _leftBorder;
         rightBorder = _rightBorder;
         downBorder = _downBorder;
 
         onDeath = _onDeath;
-    }
-
-    public void InitializeBorders()
-    {
-        wLeft = true;
-        wRight = true;
-        wDown = true;
-        
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, -transform.right, 20f, aliensMask);
-        foreach (RaycastHit hit in hits)
-        {
-            if (hit.transform.parent.gameObject != this)
-            {
-                wLeft = false;
-                break;
-            }
-        }
-        
-        hits = Physics.RaycastAll(transform.position, transform.right, 20f, aliensMask);
-        foreach (RaycastHit hit in hits)
-        {
-            if (hit.transform.parent.gameObject != this)
-            {
-                wRight = false;
-                break;
-            }
-        }
-        
-        hits = Physics.RaycastAll(transform.position, -transform.up, 20f, aliensMask);
-        foreach (RaycastHit hit in hits)
-        {
-            if (hit.transform.parent.gameObject != this)
-            {
-                wDown = false;
-                break;
-            }
-        }
-    }
-
-    public void SetCastBorderLeft()
-    {
-        wLeft = true;
-    }
-
-    public void SetCastBorderRight()
-    {
-        wRight = true;
-    }
-
-    public void SetCastBorderDown()
-    {
-        wDown = true;
     }
 
     public void AddOnDeathAction(Action _onDeath)
@@ -107,13 +61,13 @@ public class Alien : MonoBehaviour
         if (isDead)
             return;
 
-        if (transform.position.x + transform.localScale.x / 2f >= rightBorder.x)
+        if (transform.position.x >= rightBorder.x)
         {
-            onTouchBorder();
+            onTouchBorder(alienLineIndex);
         }
-        else if (transform.position.x - transform.localScale.x / 2f <= leftBorder.x)
+        else if (transform.position.x <= leftBorder.x)
         {
-            onTouchBorder();
+            onTouchBorder(alienLineIndex);
         }
         /*if (isDead)
         {

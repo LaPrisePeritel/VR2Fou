@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BoardMovement : MonoBehaviour
 {
     private Ship ship;
 
     private Alien[,] aliens;
+    private int[] linesDirection;
+    private float aliensAccelerationTimer;
 
     private bool reset;
 
@@ -24,6 +28,8 @@ public class BoardMovement : MonoBehaviour
     [Header("Movements")]
     [SerializeField] private float horizontalSpeed;
     [SerializeField] private float verticalSpeed;
+    [SerializeField] private float speedAcceleration;
+    [SerializeField] private float timeBetweenAliensAcceleration;
     [SerializeField] private float increaseSpeedPerDeath;
 
     [Header("Acceleration")]
@@ -34,8 +40,7 @@ public class BoardMovement : MonoBehaviour
     [SerializeField] private float durationAccelerationValue;
     private float durationAcceleration;
     private bool accelerate;
-
-
+    
 
     private void Awake()
     {
@@ -45,10 +50,17 @@ public class BoardMovement : MonoBehaviour
         hSpeed = horizontalSpeed;
         vSpeed = verticalSpeed;
 
+        linesDirection = new int[rows];
+
         moveDirection = Vector3.Distance(transform.position, transform.position + Vector3.left * leftBorderOffset) >
                         Vector3.Distance(transform.position, transform.position + Vector3.right * rightBorderOffset)
             ? -1f
             : 1f;
+        
+        for (int i = 0; i < linesDirection.Length; i++)
+        {
+            linesDirection[i] = (int)-moveDirection;
+        }
         
         SpawnAliens();
         timeBeforeNextAcceleration = Random.Range(randomSpacingBetweenAccelerations.x, randomSpacingBetweenAccelerations.y);
@@ -59,51 +71,28 @@ public class BoardMovement : MonoBehaviour
     {
         aliens = new Alien[rows, columns];
 
-        bool c = columns % 2 == 0;
-
-        if (c)
+        for (int i = 0; i < rows; i++)
         {
-            for (int i = 0; i < rows; i++)
+            for (int j = 0; j < columns; j++)
             {
-                for (int j = -columns / 2; j < columns / 2; j++)
-                {
-                    Vector3 alienPosition = transform.position + Vector3.down * spaceBetweenAliens * (i + 0.5f) +
-                                            Vector3.right * spaceBetweenAliens * (j + 0.5f);
-                    aliens[i, j + columns / 2] = Instantiate(aliensPrefab, alienPosition, Quaternion.identity);
-                    aliens[i, j + columns / 2].Initialisation(ChangeDirection,
-                        () => GameManager.instance.End(false),
-                        startPosition + Vector3.left * leftBorderOffset,
-                        startPosition + Vector3.right * rightBorderOffset,
-                        ship.transform.position,
-                        AliensIncreaseSpeed);
-                    aliens[i, j + columns / 2].transform.parent = transform;
-                }
+                Vector3 alienPosition = transform.position + Vector3.back * spaceBetweenAliens * (i + 0.5f) +
+                                        Vector3.right * spaceBetweenAliens * j ;
+                aliens[i, j] = Instantiate(aliensPrefab, alienPosition, Quaternion.identity);
+                aliens[i, j].Initialisation(ChangeDirection, i,
+                    () => GameManager.instance.End(false),
+                    startPosition + Vector3.left * leftBorderOffset,
+                    startPosition + Vector3.right * rightBorderOffset,
+                    ship.transform.position,
+                    AliensIncreaseSpeed);
+                aliens[i, j].transform.parent = transform;
             }
         }
-        else
-        {
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = -columns / 2 - 1; j < columns / 2; j++)
-                {
-                    Vector3 alienPosition = transform.position + Vector3.down * spaceBetweenAliens * (i + 0.5f) +
-                                            Vector3.right * spaceBetweenAliens * (j + 1);
-                    aliens[i, j + columns / 2 + 1] = Instantiate(aliensPrefab, alienPosition, Quaternion.identity);
-                    aliens[i, j + columns / 2 + 1].Initialisation(ChangeDirection,
-                        () => GameManager.instance.End(false),
-                        startPosition + Vector3.left * leftBorderOffset,
-                        startPosition + Vector3.right * rightBorderOffset,
-                        ship.transform.position,
-                        AliensIncreaseSpeed);
-                    aliens[i, j + columns / 2 + 1].transform.parent = transform;
-                }
-            }
-        }
+    }
 
-        foreach (Alien alien in aliens)
-        {
-            alien.InitializeBorders();
-        }
+    private void Start()
+    {
+        for (int i =0 ; i < rows; i++)
+            ChangeDirection(i);
     }
 
     public Alien[,] GetAliens()
@@ -113,36 +102,78 @@ public class BoardMovement : MonoBehaviour
     
     private void Update()
     {
-        transform.position += moveDirection * hSpeed * Time.deltaTime * Vector3.right;
+        //transform.position += moveDirection * hSpeed * Time.deltaTime * Vector3.right;
 
-        timeBeforeNextAcceleration -= Time.deltaTime;
+        /*if (!nextAlienMove)
+        {
+            aliensAccelerationTimer -= Time.deltaTime;
+
+            if (aliensAccelerationTimer <= 0f)
+            {
+                aliensMoveIndex.y++;
+                if (aliensMoveIndex.y >= aliens.GetLength(1))
+                {
+                    aliensMoveIndex.y = 0;
+                    aliensMoveIndex.x++;
+                }
+            }
+        }*/
+        
+        //MoveAliens();
+        
+        /*timeBeforeNextAcceleration -= Time.deltaTime;
         if (timeBeforeNextAcceleration <= 0 && !accelerate)
-            Accelerate();
+            Accelerate();*/
 
-        if(accelerate)
+        /*if(accelerate)
         {
             hSpeed = horizontalSpeed + acceleration * accelerationCurve.Evaluate(durationAcceleration);
             vSpeed = verticalSpeed + acceleration * accelerationCurve.Evaluate(durationAcceleration);
             durationAcceleration += Time.deltaTime;
             if (durationAcceleration >= durationAccelerationValue && accelerate)
                 Decelerate();
-        }
+        }*/
     }
 
-    private void LateUpdate()
+    private void MoveAliens()
     {
-        reset = true;
-    }
+        // Slow last alien if needed
+        /*if (slowLastAlien)
+        {
+            if (aliensMoveIndex.y > 0)
+            {
+                aliens[(int)aliensMoveIndex.x, (int)aliensMoveIndex.y - 1].Rigidbody.velocity = Vector3.right * moveDirection * horizontalSpeed;
+            }
+            else if (aliensMoveIndex.y == 0 && aliensMoveIndex.x > 0)
+            {
+                aliens[(int)aliensMoveIndex.x - 1, aliens.GetLength(1) - 1].Rigidbody.velocity = Vector3.right * moveDirection * horizontalSpeed;
+            }
 
-    private void ChangeDirection()
+            slowLastAlien = false;
+        }*/
+        
+        //aliensAccelerationTimer = timeBetweenAliensAcceleration;
+    }
+    
+    private void ChangeDirection(int _lineIndex)
     {
-        if (!reset)
+        if (_lineIndex < 0 || _lineIndex >= rows)
             return;
 
-        reset = false;
-        moveDirection *= -1f;
-        StopAllCoroutines();
-        StartCoroutine(DownDirection());
+        linesDirection[_lineIndex] *= -1;
+
+        for (int i = 0; i < columns; i++)
+        {
+            if (aliens[_lineIndex, i] != null)
+            {
+                aliens[_lineIndex, i].Rigidbody.velocity = Vector3.right * linesDirection[_lineIndex] * horizontalSpeed;
+            }
+        }
+
+        //aliensMoveIndex = Vector2.zero;
+        /*StopAllCoroutines();
+        StartCoroutine(DownDirection());*/
+        StartCoroutine(DownDirection(_lineIndex));
     }
 
     private void AliensIncreaseSpeed()
@@ -162,17 +193,21 @@ public class BoardMovement : MonoBehaviour
         accelerate = false;
     }
 
-    private IEnumerator DownDirection()
+    private IEnumerator DownDirection(int _line)
     {
-        float start = transform.position.y;
+        float start = aliens[_line, 0].transform.position.z;
         float finalDownDirection = start - spaceBetweenAliens;
         float t = 0f;
 
         while (t <= 1f)
         {
             t += vSpeed * Time.deltaTime;
-            float y = Mathf.Lerp(start, finalDownDirection, t);
-            transform.position = new Vector3(transform.position.x, y, transform.position.z);
+            float z = Mathf.Lerp(start, finalDownDirection, t);
+
+            for (int i = 0; i < columns; i++)
+            {
+                aliens[_line, i].Rigidbody.MovePosition(new Vector3(aliens[_line, i].Rigidbody.position.x, aliens[_line, i].Rigidbody.position.y, z));
+            }
 
             yield return null;
         }
@@ -203,32 +238,14 @@ public class BoardMovement : MonoBehaviour
             
             Gizmos.color = Color.red;
 
-            bool c = columns % 2 == 0;
-
-            if (c)
+            for (int i = 0; i < rows; i++)
             {
-                for (int i = 0; i < rows; i++)
+                for (int j = 0; j < columns; j++)
                 {
-                    for (int j = -columns / 2; j < columns / 2; j++)
-                    {
-                        Vector3 alienPosition = transform.position + Vector3.down * spaceBetweenAliens * (i + 0.5f) +
-                                                Vector3.right * spaceBetweenAliens * (j + 0.5f);
+                    Vector3 alienPosition = transform.position + Vector3.back * spaceBetweenAliens * (i + 0.5f) +
+                                            Vector3.right * spaceBetweenAliens * j;
 
-                        Gizmos.DrawCube(alienPosition, Vector3.one);
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 0; i < rows; i++)
-                {
-                    for (int j = -columns / 2 - 1; j < columns / 2; j++)
-                    {
-                        Vector3 alienPosition = transform.position + Vector3.down * spaceBetweenAliens * (i + 0.5f) +
-                                                Vector3.right * spaceBetweenAliens * (j + 1);
-
-                        Gizmos.DrawCube(alienPosition, Vector3.one);
-                    }
+                    Gizmos.DrawCube(alienPosition, Vector3.one);
                 }
             }
         }
