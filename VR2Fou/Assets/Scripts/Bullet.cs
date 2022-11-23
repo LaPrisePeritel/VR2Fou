@@ -20,6 +20,8 @@ public class Bullet : MonoBehaviour
 
     [SerializeField][Range(0, 2.0f)]private float bulletSpeed;
 
+    public Color gunLightColor;
+
     public virtual void Initiate(Vector3 dir, Vector3 initPos)
     {
         transform.position = initPos;

@@ -57,7 +57,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: fa5073301cb9dd745ac31dd25bf70d71, type: 2}
-  - {fileID: 670224309865224971, guid: e48d18018a0ba46c283d9fd9c227e578, type: 3}
+  - {fileID: 8534126185200885935, guid: 297c091aadc93e941b9ebc6e6c0c23bd, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4889,6 +4889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletType: 2
   bulletSpeed: 0
+  gunLightColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!54 &7750199775437016762
 Rigidbody:
   m_ObjectHideFlags: 0
