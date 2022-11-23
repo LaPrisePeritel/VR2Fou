@@ -22,6 +22,8 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] private GameObject hyperspace;
     [SerializeField] private AnimationCurve hyperspaceCurve;
+
+    private bool inChangingPhase = true;
     private Camera cam;
     private HYPERSPACE_STATE hyperspaceState = HYPERSPACE_STATE.IDLE;
 
@@ -36,6 +38,7 @@ public class MenuManager : MonoBehaviour
     private IEnumerator HyperspaceEffect()
     {
         var hyperspaceParticle = Instantiate(hyperspace, new Vector3(0, 0.7f, 20.0f), Quaternion.identity, transform);
+        cam.GetComponent<CameraShake>().LaunchShake(HYPERSPACE_DURATION, 0.1f);
 
         float time = 0.0f;
 
@@ -43,9 +46,9 @@ public class MenuManager : MonoBehaviour
         while (time < HYPERSPACE_DURATION)
         {
             var interpolateTime = time / HYPERSPACE_DURATION;
-            if (interpolateTime >= 0.8f)
+            if (interpolateTime >= 0.5f)
                 hyperspaceState = HYPERSPACE_STATE.EXIT_HYPERSPACE;
-            else if (interpolateTime >= 0.1f)
+            else if (interpolateTime >= 0.4f)
                 hyperspaceState = HYPERSPACE_STATE.IN_HYPERSPACE;
             else
                 hyperspaceState = HYPERSPACE_STATE.ENTER_HYPERSPACE;
@@ -54,7 +57,11 @@ public class MenuManager : MonoBehaviour
             switch (hyperspaceState)
             {
                 case HYPERSPACE_STATE.ENTER_HYPERSPACE:
-                    StartCoroutine(EnterHyperspace());
+                    if (inChangingPhase)
+                    {
+                        inChangingPhase = false;
+                        StartCoroutine(EnterHyperspace());
+                    }
                     break;
 
                 case HYPERSPACE_STATE.IN_HYPERSPACE:
@@ -62,7 +69,11 @@ public class MenuManager : MonoBehaviour
                     break;
 
                 case HYPERSPACE_STATE.EXIT_HYPERSPACE:
-                    StartCoroutine(ExitHyperspace());
+                    if (inChangingPhase)
+                    {
+                        inChangingPhase = false;
+                        StartCoroutine(ExitHyperspace());
+                    }
                     break;
             }
 
@@ -79,22 +90,28 @@ public class MenuManager : MonoBehaviour
     private IEnumerator EnterHyperspace()
     {
         float time = 0.0f;
-        while (time < 1.0f)
+        while (time < 4.0f)
         {
-            cam.fieldOfView = Mathf.Lerp(80.0f, 120.0f, time / 0.1f);
+            cam.fieldOfView = Mathf.Lerp(80.0f, 120.0f, time / 0.2f);
             time += Time.deltaTime;
             yield return null;
         }
+
+        cam.fieldOfView = 120.0f;
+        inChangingPhase = true;
     }
 
     private IEnumerator ExitHyperspace()
     {
         float time = 0.0f;
-        while (time < 2.0f)
+        while (time < 5.0f)
         {
-            cam.fieldOfView = Mathf.Lerp(120.0f, 80.0f, time / 0.2f);
+            cam.fieldOfView = Mathf.Lerp(120.0f, 80.0f, time / 5.0f);
             time += Time.deltaTime;
             yield return null;
         }
+
+        cam.fieldOfView = 80.0f;
+        inChangingPhase = true;
     }
 }
