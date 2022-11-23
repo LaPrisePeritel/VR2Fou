@@ -116,14 +116,6 @@ public class Alien : MonoBehaviour
         {
             onTouchBorder();
         }
-        /*if (isDead)
-        {
-            deathDuration += Time.deltaTime;
-            if(deathDuration >= deathParticle.main.duration)
-            {
-                Destroy(gameObject);
-            }
-        }*/
     }
     private void OnDeath()
     {
@@ -133,7 +125,7 @@ public class Alien : MonoBehaviour
 
     private IEnumerator BlackHoleDeath(Vector3 _holePosition, Material _vacuumMaterial)
     {
-        Camera.main.GetComponent<CameraShake>().LaunchShake(.5f, 10f);
+        Camera.main.GetComponent<CameraShake>().LaunchShake(.3f, .1f);
         
         meshRenderer.material = _vacuumMaterial;
         meshRenderer.material.SetVector("_Black_Hole_Position", _holePosition);

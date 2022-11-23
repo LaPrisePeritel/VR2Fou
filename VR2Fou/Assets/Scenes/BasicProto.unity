@@ -6840,7 +6840,7 @@ MonoBehaviour:
     type: 3}
   specialBullets:
   - {fileID: 3884862862415128373, guid: fceb2db30df69204899ac1072576f94b, type: 3}
-  - {fileID: 7377971598468327467, guid: b3b3e0cf076723a4d89c4cfbff0c7659, type: 3}
+  - {fileID: 2047821177033511319, guid: b3b3e0cf076723a4d89c4cfbff0c7659, type: 3}
   - {fileID: 3884862862415128373, guid: 84be44f81e371dc4ba0d1a9c37bd9ac5, type: 3}
   - {fileID: 1305927853706134372, guid: 8fae210c0710c5c4ca28bea5de29663d, type: 3}
   bulletStart: {fileID: 1476174751}

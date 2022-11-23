@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 6314361988431971875}
   - component: {fileID: 6314361988431972060}
   - component: {fileID: 6314361988431972061}
-  - component: {fileID: 7377971598468327467}
   - component: {fileID: 3371071233873266185}
   - component: {fileID: 8376686039246999089}
+  - component: {fileID: 2047821177033511319}
   m_Layer: 0
   m_Name: BH_Bullet
   m_TagString: Untagged
@@ -86,20 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7377971598468327467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6314361988431972063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93321acc1c4321046a648b869d0db1a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletType: 1
-  bulletSpeed: 0.5
 --- !u!135 &3371071233873266185
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -124,8 +110,23 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2047821177033511319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6314361988431972063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760c066fa4a297c449ce588a2a117106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletType: 1
+  bulletSpeed: 0.1
+  gunLightColor: {r: 1, g: 0, b: 0.3689251, a: 1}

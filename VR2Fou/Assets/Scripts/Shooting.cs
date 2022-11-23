@@ -28,8 +28,10 @@ public class Shooting : MonoBehaviour
     private Bullet nextSpecialBullet;
     private bool shootSpecial = false;
 
-    private void Awake() 
+    private void Awake()
     {
+        from = transform.localRotation;
+        to = from;
         nextSpecialBullet = specialBullets[Random.Range(0, specialBullets.Count)];
         currentBullet = defaultBullet;
     }
@@ -43,9 +45,9 @@ public class Shooting : MonoBehaviour
 
     private void Update()
     {
+        intervalShoot -= Time.deltaTime;
         if (Input.GetKeyDown(SWITCH_BULLET_KEY))
             SwitchBullet();
-        intervalShoot -= Time.deltaTime;
         if (intervalShoot <= 0)
             if (Input.GetKeyDown(SHOOT_KEY))
                 Shoot();
@@ -78,7 +80,7 @@ public class Shooting : MonoBehaviour
 
     private void ShootCurrentBullet()
     {
-        Instantiate(currentBullet).Initiate(transform.up, transform.position);
+        Instantiate(currentBullet).Initiate(transform.forward, bulletStart.position);
         currentBullet = defaultBullet;
     }
 
