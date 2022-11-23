@@ -266,7 +266,7 @@ public class Alien : MonoBehaviour
                 Destroy(gameObject);
                 break;
             case Bullet.EBulletType.Lightning:
-                Destroy(gameObject);
+                StartCoroutine(Lightning());
                 break;
 
             case Bullet.EBulletType.Balloon:
