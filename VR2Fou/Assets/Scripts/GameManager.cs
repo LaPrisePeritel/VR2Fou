@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     [Header("Combo")]
     public int GaugeRequired = 1;
     public int CurrentGauge;
-     [HideInInspector]
+    [HideInInspector]
     public float ComboGauge;
     public float score { get; private set; }
 
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     public void IncrementCombo()
     {
         CurrentGauge++;
-        if(CurrentGauge >= GaugeRequired)
+        if (CurrentGauge >= GaugeRequired)
         {
             EvCombo.Invoke();
             CurrentGauge = 0;

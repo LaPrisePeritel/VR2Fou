@@ -3,89 +3,47 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
-    [SerializeField]
-    Bullet prefabBullet;
+    private const KeyCode SWITCH_BULLET_KEY = KeyCode.B;
+    private const KeyCode SHOOT_KEY = KeyCode.Z;
 
-    [SerializeField]
-    private List<Bullet> prefabsBullet;
+    [SerializeField] private Bullet defaultBullet;
+    [SerializeField] private List<Bullet> bullets;
 
-    [SerializeField]
-    private float intervalShootValue = 0.2f;
-    private float intervalShoot;
+    private Bullet currentBullet;
 
-    private bool shootSpecial = false;
+    private int currentBulletIndex = 1;
+    private bool isRandom;
 
-    [SerializeField]
-    private Transform bulletStart;
+    private void Awake() => currentBullet = defaultBullet;
 
-    [SerializeField]
-    AnimationCurve recoilCurve;
+    private void OnEnable() => GameManager.instance.EvCombo.AddListener(ShootSpecial);
 
-    private Quaternion from;
-    private Quaternion to;
+    private void OnDisable() => GameManager.instance.EvCombo.RemoveListener(ShootSpecial);
 
-    [Header("ShootSpecial")]
-    [SerializeField]
-    private Light colorLight;
-    [SerializeField] float intensityMultiplier;
-    private Bullet nextSpecialBullet;
-
-    private void OnEnable()
-    {
-        GameManager.instance.EvCombo.AddListener(ShootSpecial);
-        from = transform.localRotation;
-        to = from;
-        nextSpecialBullet = prefabsBullet[Random.Range(0, prefabsBullet.Count)];
-        colorLight.color = nextSpecialBullet.gunLightColor;
-    }
-    // Update is called once per frame
     private void Update()
     {
-        intervalShoot -= Time.deltaTime;
-        if(intervalShoot <= 0)
+        if (Input.GetKeyDown(SWITCH_BULLET_KEY))
+            SwitchBullet();
+
+        if (Input.GetKeyDown(SHOOT_KEY))
         {
-            if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.UpArrow))
+            if (isRandom)
             {
-                Shoot();
+                isRandom = false;
+                currentBullet = bullets[Random.Range(0, bullets.Count)];
+                return;
             }
-        }
-        if(intervalShoot > 0)
-        {
-            AnimateGun(Time.deltaTime);
+
+            ShootCurrentBullet();
         }
     }
 
-    private void Shoot()
-    {
-        if (shootSpecial)
-        {
-            Bullet b = Instantiate(nextSpecialBullet);
-            nextSpecialBullet = prefabsBullet[Random.Range(0, prefabsBullet.Count)];
-            colorLight.color = nextSpecialBullet.gunLightColor;
-            b.Initiate(transform.forward, bulletStart.position);
-            shootSpecial = false;
-        }
-        else
-        {
-            Bullet b = Instantiate(prefabBullet);
-            b.Initiate(transform.forward, bulletStart.position);
-            colorLight.intensity = intensityMultiplier * GameManager.instance.CurrentGauge;
+    private void SwitchBullet() => currentBullet = bullets[currentBulletIndex++ % bullets.Count];
 
-        }
-        from = transform.rotation;
-        to *= Quaternion.Euler(new Vector3(0,0,90));
-        intervalShoot = intervalShootValue;
-    }
-
-    private void AnimateGun(float deltaTime)
-    {
-        transform.rotation = Quaternion.Lerp(from, to, deltaTime / intervalShoot);
-    }
+    private void ShootCurrentBullet() => Instantiate(currentBullet).Initiate(transform.up, transform.position);
 
     private void ShootSpecial()
     {
-        //TODO : Add effects with special shoot
-        shootSpecial = true;
+        //TODO: add effects with special shoot
     }
-
 }
