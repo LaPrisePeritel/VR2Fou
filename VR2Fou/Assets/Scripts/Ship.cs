@@ -2,38 +2,39 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Ship : MonoBehaviour
 {
-    private const string AXIS_H = "Horizontal";
+    [SerializeField] private InputActionProperty spaceshipInput;
 
     private Rigidbody _rigidbody;
     private Vector3 _movement;
     private Vector3 startPosition;
-    
+
     //field is used for properties
     [field: Range(1, 10)]
     [field: SerializeField]
     public float Speed { get; private set; }
-    
+
     [SerializeField] private float movementClampX;
-    
-    void Awake()
+
+    private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         startPosition = transform.position;
     }
-    
-    void Update()
+
+    private void Update()
     {
-        _movement = transform.right * Input.GetAxis(AXIS_H);
+        _movement = transform.right * spaceshipInput.action.ReadValue<float>();
     }
 
     private void FixedUpdate()
     {
         Vector3 nPosition = _rigidbody.position + _movement * Speed * Time.fixedDeltaTime;
-        nPosition.x = Mathf.Clamp(nPosition.x,startPosition.x - movementClampX, startPosition.x + movementClampX);
-        
+        nPosition.x = Mathf.Clamp(nPosition.x, startPosition.x - movementClampX, startPosition.x + movementClampX);
+
         _rigidbody.MovePosition(nPosition);
     }
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -32,6 +33,15 @@ public class GameManager : MonoBehaviour
     public void End(bool _victory)
     {
         Debug.Log($"Victory: {_victory}");
+
+        if (_victory)
+        {
+            SceneManager.LoadScene(0);
+        }
+        else
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
     #region Score
