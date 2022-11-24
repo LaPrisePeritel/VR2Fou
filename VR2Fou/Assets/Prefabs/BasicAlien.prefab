@@ -61,6 +61,8 @@ MonoBehaviour:
     type: 3}
   lightningParticlesPrefab: {fileID: 9061638284168144498, guid: d60648ecfcf2ef248af9ff721ce01437,
     type: 3}
+  alienBulletPrefab: {fileID: -1371489862271887178, guid: 93cb05564f0004248bde7cd4b41909b1,
+    type: 3}
 --- !u!54 &3139901420595953446
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5112,5 +5114,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 5, z: 10}
+  m_Size: {x: 10, y: 12, z: 10}
   m_Center: {x: 0, y: 0, z: 0}

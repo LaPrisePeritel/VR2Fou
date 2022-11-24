@@ -26,6 +26,7 @@ public class Bullet : MonoBehaviour
     {
         transform.position = initPos;
         direction = dir * bulletSpeed;
+        Destroy(gameObject, 5.0f);
     }
 
     protected virtual void Update()

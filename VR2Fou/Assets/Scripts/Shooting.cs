@@ -17,9 +17,10 @@ public class Shooting : MonoBehaviour
     [Header("Animation")]
     [SerializeField]private float intervalShootValue = 0.2f;
     private float intervalShoot;
-    private Quaternion from;
-    private Quaternion to;
+    [SerializeField] private Quaternion from;
+    [SerializeField] private Quaternion to;
     [SerializeField]AnimationCurve recoilCurve;
+    private Vector3 recoilPosition;
 
     [Header("ShootSpecial")]
     [SerializeField]
@@ -34,6 +35,7 @@ public class Shooting : MonoBehaviour
         to = from;
         nextSpecialBullet = specialBullets[Random.Range(0, specialBullets.Count)];
         currentBullet = defaultBullet;
+        recoilPosition = transform.localPosition;
     }
 
     private void OnEnable()
@@ -59,7 +61,7 @@ public class Shooting : MonoBehaviour
     {
         if (shootSpecial)
         {
-            currentBullet = nextSpecialBullet;
+            currentBullet = nextSpecialBullet;  
             nextSpecialBullet = specialBullets[Random.Range(0, specialBullets.Count)];
             colorLight.color = nextSpecialBullet.gunLightColor;
             shootSpecial = false;
@@ -67,13 +69,14 @@ public class Shooting : MonoBehaviour
 
         ShootCurrentBullet();
         colorLight.intensity = intensityMultiplier * GameManager.instance.CurrentGauge;
-        from = transform.rotation;
-        to *= Quaternion.Euler(new Vector3(0, 0, 90));
+        from = transform.localRotation;
+        to *= Quaternion.Euler(new Vector3(0, 0, 360 / GameManager.instance.GaugeRequired));
         intervalShoot = intervalShootValue;
     }
     private void AnimateGun(float deltaTime)
     {
-        transform.rotation = Quaternion.Lerp(from, to, deltaTime / intervalShoot);
+        transform.localRotation = Quaternion.Lerp(from, to, deltaTime / intervalShoot);
+        transform.localPosition = Vector3.up * recoilCurve.Evaluate(intervalShoot / intervalShootValue) + recoilPosition;
     }
 
     private void SwitchBullet() => currentBullet = specialBullets[currentBulletIndex++ % specialBullets.Count];

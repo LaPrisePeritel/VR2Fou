@@ -7,7 +7,7 @@ public class BulletBlackhole : Bullet
     bool grow;
     float f = 0;
 
-    [SerializeField]float speedGrowth;
+    [SerializeField] private AnimationCurve curveGrowth;
     Vector3 baseScale;
     public override void Initiate(Vector3 dir, Vector3 initPos)
     {
@@ -19,7 +19,7 @@ public class BulletBlackhole : Bullet
         base.Update();
         if (grow)
         {
-            transform.localScale = Vector3.Lerp(baseScale, baseScale * 2, f* speedGrowth);
+            transform.localScale = Vector3.Lerp(baseScale, baseScale * 2, curveGrowth.Evaluate(f));
             f += Time.deltaTime;
         }
         if (f >= 1)
