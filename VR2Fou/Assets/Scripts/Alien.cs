@@ -13,6 +13,7 @@ public class Alien : MonoBehaviour
     private Action onTouchDown, onDeath;
 
     private Vector3 leftBorder, rightBorder, downBorder;
+    private bool isLeftDirection;
     private int alienLineIndex;
 
     [SerializeField] private ParticleSystem deathParticle;
@@ -52,6 +53,11 @@ public class Alien : MonoBehaviour
         onDeath = _onDeath;
     }
 
+    public void SetDirection(bool _isLeft)
+    {
+        isLeftDirection = _isLeft;
+    }
+
     public void AddOnDeathAction(Action _onDeath)
     {
         onDeath += _onDeath;
@@ -62,11 +68,11 @@ public class Alien : MonoBehaviour
         if (isDead)
             return;
 
-        if (transform.position.x >= rightBorder.x)
+        if (!isLeftDirection && transform.position.x >= rightBorder.x)
         {
             onTouchBorder(alienLineIndex);
         }
-        else if (transform.position.x <= leftBorder.x)
+        else if (isLeftDirection && transform.position.x <= leftBorder.x)
         {
             onTouchBorder(alienLineIndex);
         }

@@ -462,43 +462,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aliensPrefab: {fileID: 2935624742507014495, guid: 48413505a04e27946bccf8ef7294bd2c,
     type: 3}
-  spaceBetweenAliens: 1.5
+  spaceBetweenAliens: 2
+  alienDownLength: 1
   rows: 5
   columns: 5
   leftBorderOffset: 0
   rightBorderOffset: 20
   horizontalSpeed: 2
   verticalSpeed: 1
-  speedAcceleration: 0
-  timeBetweenAliensAcceleration: 0
+  speedAcceleration: 1.5
+  timeBetweenAliensAcceleration: 1
   increaseSpeedPerDeath: 0.25
-  accelerationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1.0062714
-      value: -0.0048980713
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  randomSpacingBetweenAccelerations: {x: 4, y: 4}
-  acceleration: 3
-  durationAccelerationValue: 1
 --- !u!4 &636116842
 Transform:
   m_ObjectHideFlags: 0
