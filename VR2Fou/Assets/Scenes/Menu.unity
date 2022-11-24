@@ -849,6 +849,26 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -9066217059660075855, guid: 596cc86f683fa6248bcd0298b65b2072,
         type: 3}
+    - target: {fileID: 4395307003330660178, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.416
+      objectReference: {fileID: 0}
+    - target: {fileID: 4395307003330660178, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.641
+      objectReference: {fileID: 0}
+    - target: {fileID: 4893041141081540092, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.069
+      objectReference: {fileID: 0}
+    - target: {fileID: 4893041141081540092, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.788
+      objectReference: {fileID: 0}
     - target: {fileID: 5465817933697134835, guid: 8ef38bcde5015e14db9efb4f99af556f,
         type: 3}
       propertyPath: m_ActionAssets.Array.data[0]

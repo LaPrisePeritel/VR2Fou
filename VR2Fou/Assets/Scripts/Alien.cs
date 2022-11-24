@@ -118,7 +118,6 @@ public class Alien : MonoBehaviour
             meshRenderer.material.SetFloat("_Effect", value);
         }
 
-        Camera.main.GetComponent<CameraShake>().LaunchShake(0.5f, 0.3f);
         Destroy(gameObject);
     }
 
