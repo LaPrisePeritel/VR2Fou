@@ -35,8 +35,9 @@ public class MenuManager : MonoBehaviour
 
     private IEnumerator HyperspaceEffect()
     {
-        var hyperspaceParticle = Instantiate(hyperspace, new Vector3(0, 0.7f, 20.0f), Quaternion.identity, transform);
-        cam.GetComponent<CameraShake>().LaunchShake(HYPERSPACE_DURATION, 0.01f);
+        var hyperspaceParticle = Instantiate(hyperspace, new Vector3(0, 0.7f, 20.0f), hyperspace.transform.rotation);
+
+        cam.GetComponent<CameraShake>().LaunchShake(HYPERSPACE_DURATION - 4.5f, 0.01f);
 
         float time = 0.0f;
 

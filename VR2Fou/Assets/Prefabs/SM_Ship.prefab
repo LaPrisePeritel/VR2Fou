@@ -1152,7 +1152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ActionAssets:
-  - {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  - {fileID: -944628639613478452, guid: 596cc86f683fa6248bcd0298b65b2072, type: 3}
 --- !u!1 &5465817933700188162
 GameObject:
   m_ObjectHideFlags: 0
@@ -1388,6 +1388,22 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: -8581951277387234862, guid: 596cc86f683fa6248bcd0298b65b2072,
       type: 3}
+  interactInput:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Interact Input
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: c02c9a33-37a7-4de3-8495-df5ff0a3c0b8
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -4026634031179876390, guid: 596cc86f683fa6248bcd0298b65b2072,
+      type: 3}
+  mask:
+    serializedVersion: 2
+    m_Bits: 128
   <Sensitivity>k__BackingField: 0.1
   _body: {fileID: 5465817933697134833}
 --- !u!114 &1972282372
@@ -3171,7 +3187,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8943632656366924093}
-  m_Mesh: {fileID: 7707784612436810726, guid: 297c091aadc93e941b9ebc6e6c0c23bd, type: 3}
+  m_Mesh: {fileID: 7707784612436810726, guid: 5d9c49faf778f204da7d787599ac2c95, type: 3}
 --- !u!23 &6970957202469883827
 MeshRenderer:
   m_ObjectHideFlags: 0
