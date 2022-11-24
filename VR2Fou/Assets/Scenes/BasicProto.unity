@@ -200,7 +200,7 @@ MonoBehaviour:
   spatialSound: 1
   audioSources: 32
   disableConsoleLogs: 0
-  dontDestroyOnLoad: 1
+  dontDestroyOnLoad: 0
   dynamicSourceAllocation: 1
   stopOnSceneLoad: 0
   spatializeLateUpdate: 0
