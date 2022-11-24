@@ -468,11 +468,13 @@ MonoBehaviour:
   columns: 5
   leftBorderOffset: 0
   rightBorderOffset: 20
-  horizontalSpeed: 2
-  verticalSpeed: 1
+  horizontalSpeed: 3
+  verticalSpeed: 2
   speedAcceleration: 1.5
   timeBetweenAliensAcceleration: 1
   increaseSpeedPerDeath: 0.25
+  timeBetweenShoot: 3
+  timeShootDecreasePerDeath: 0
 --- !u!4 &636116842
 Transform:
   m_ObjectHideFlags: 0
@@ -1098,6 +1100,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8040659dd3c4d4c8c846adb80e69a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camInput:
+    m_UseReference: 0
+    m_Action:
+      m_Name: 
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   <Sensitivity>k__BackingField: 0.1
   _body: {fileID: 1725982594}
 --- !u!114 &963194231
@@ -1291,6 +1305,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad7ce24ab603e924db2a72d989aed282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spaceshipInput:
+    m_UseReference: 0
+    m_Action:
+      m_Name: 
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   <Speed>k__BackingField: 6
   movementClampX: 10
 --- !u!54 &1433246202
@@ -6812,6 +6838,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82cd9387c5a37f146b04c3c0188578bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  switchBulletKey:
+    m_UseReference: 0
+    m_Action:
+      m_Name: 
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  ShootKey:
+    m_UseReference: 0
+    m_Action:
+      m_Name: 
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   defaultBullet: {fileID: 3884862862415128373, guid: 84be44f81e371dc4ba0d1a9c37bd9ac5,
     type: 3}
   specialBullets:
