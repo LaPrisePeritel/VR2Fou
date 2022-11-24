@@ -13,6 +13,7 @@ public class Alien : MonoBehaviour
     private Action onTouchDown, onDeath;
 
     private Vector3 leftBorder, rightBorder, downBorder;
+    private bool isLeftDirection;
     private int alienLineIndex;
 
     [SerializeField] private ParticleSystem deathParticle;
@@ -29,6 +30,9 @@ public class Alien : MonoBehaviour
     [SerializeField] private ParticleSystem confettiParticlesPrefab;
     [SerializeField] private ParticleSystem dustParticlesPrefab;
     [SerializeField] private ParticleSystem lightningParticlesPrefab;
+
+    [Header("Shooting")]
+    [SerializeField] private Bullet alienBulletPrefab;
 
     private void Awake()
     {
@@ -52,6 +56,11 @@ public class Alien : MonoBehaviour
         onDeath = _onDeath;
     }
 
+    public void SetDirection(bool _isLeft)
+    {
+        isLeftDirection = _isLeft;
+    }
+
     public void AddOnDeathAction(Action _onDeath)
     {
         onDeath += _onDeath;
@@ -62,15 +71,26 @@ public class Alien : MonoBehaviour
         if (isDead)
             return;
 
-        if (transform.position.x >= rightBorder.x)
+        if (!isLeftDirection && transform.position.x >= rightBorder.x)
         {
             onTouchBorder(alienLineIndex);
         }
-        else if (transform.position.x <= leftBorder.x)
+        else if (isLeftDirection && transform.position.x <= leftBorder.x)
         {
             onTouchBorder(alienLineIndex);
+        }
+
+        if (transform.position.z <= downBorder.z)
+        {
+            onTouchDown();
         }
     }
+
+    public void Shoot()
+    {
+        Instantiate(alienBulletPrefab, transform.position, Quaternion.identity).Initiate(Vector3.back, transform.position);
+    }
+    
     private void OnDeath()
     {
         isDead = true;
@@ -187,6 +207,7 @@ public class Alien : MonoBehaviour
         Destroy(lightingParts.gameObject);
         Destroy(gameObject);
     }
+    
     public void Hitted(Bullet.EBulletType _bulletType, Vector3 _bulletPosition)
     {
         if (isDead)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,11 +19,18 @@ public class BoardMovement : MonoBehaviour
     private Vector3 startPosition;
     private float moveDirection;
 
-    private float hSpeed, vSpeed;
+    private float hSpeed, vSpeed, shootTimeBetween;
+
+    private float shootTimer;
+
+    private int nbAliensAlive;
 
     [Header("Initialization")]
     [SerializeField] private Alien aliensPrefab;
     [SerializeField] private float spaceBetweenAliens;
+    [Space]
+    [SerializeField] private float alienDownLength;
+    [Space]
     [SerializeField] private int rows, columns;
     [Space]
     [SerializeField] private float leftBorderOffset, rightBorderOffset;
@@ -34,23 +42,21 @@ public class BoardMovement : MonoBehaviour
     [SerializeField] private float timeBetweenAliensAcceleration;
     [SerializeField] private float increaseSpeedPerDeath;
 
-    [Header("Acceleration")]
-    [SerializeField] private AnimationCurve accelerationCurve;
-    [SerializeField] Vector2 randomSpacingBetweenAccelerations;
-    private float timeBeforeNextAcceleration;
-    [SerializeField] private float acceleration;
-    [SerializeField] private float durationAccelerationValue;
-    private float durationAcceleration;
-    private bool accelerate;
-    
+    [Header("Shooting")]
+    [SerializeField] private float timeBetweenShoot;
+    [SerializeField] private float timeShootDecreasePerDeath;
 
     private void Awake()
     {
         ship = FindObjectOfType<Ship>();
+
+        nbAliensAlive = rows * columns;
         
         startPosition = transform.position;
         hSpeed = horizontalSpeed;
         vSpeed = verticalSpeed;
+        shootTimeBetween = timeBetweenShoot;
+        shootTimer = shootTimeBetween;
 
         linesDirection = new int[rows];
 
@@ -65,8 +71,6 @@ public class BoardMovement : MonoBehaviour
         }
         
         SpawnAliens();
-        timeBeforeNextAcceleration = Random.Range(randomSpacingBetweenAccelerations.x, randomSpacingBetweenAccelerations.y);
-        durationAccelerationValue = accelerationCurve.keys[^1].time;
 
         moveNextLineFaster = true;
     }
@@ -120,57 +124,15 @@ public class BoardMovement : MonoBehaviour
                 MoveNextLineFaster();
             }
         }
-        //transform.position += moveDirection * hSpeed * Time.deltaTime * Vector3.right;
 
-        /*if (!nextAlienMove)
+        if (shootTimer > 0f)
         {
-            aliensAccelerationTimer -= Time.deltaTime;
-
-            if (aliensAccelerationTimer <= 0f)
-            {
-                aliensMoveIndex.y++;
-                if (aliensMoveIndex.y >= aliens.GetLength(1))
-                {
-                    aliensMoveIndex.y = 0;
-                    aliensMoveIndex.x++;
-                }
-            }
-        }*/
-        
-        //MoveAliens();
-        
-        /*timeBeforeNextAcceleration -= Time.deltaTime;
-        if (timeBeforeNextAcceleration <= 0 && !accelerate)
-            Accelerate();*/
-
-        /*if(accelerate)
+            shootTimer -= Time.deltaTime;
+        }
+        else
         {
-            hSpeed = horizontalSpeed + acceleration * accelerationCurve.Evaluate(durationAcceleration);
-            vSpeed = verticalSpeed + acceleration * accelerationCurve.Evaluate(durationAcceleration);
-            durationAcceleration += Time.deltaTime;
-            if (durationAcceleration >= durationAccelerationValue && accelerate)
-                Decelerate();
-        }*/
-    }
-
-    private void MoveAliens()
-    {
-        // Slow last alien if needed
-        /*if (slowLastAlien)
-        {
-            if (aliensMoveIndex.y > 0)
-            {
-                aliens[(int)aliensMoveIndex.x, (int)aliensMoveIndex.y - 1].Rigidbody.velocity = Vector3.right * moveDirection * horizontalSpeed;
-            }
-            else if (aliensMoveIndex.y == 0 && aliensMoveIndex.x > 0)
-            {
-                aliens[(int)aliensMoveIndex.x - 1, aliens.GetLength(1) - 1].Rigidbody.velocity = Vector3.right * moveDirection * horizontalSpeed;
-            }
-
-            slowLastAlien = false;
-        }*/
-        
-        //aliensAccelerationTimer = timeBetweenAliensAcceleration;
+            RandomAlienShoot();
+        }
     }
     
     private void ChangeDirection(int _lineIndex)
@@ -179,18 +141,18 @@ public class BoardMovement : MonoBehaviour
             return;
 
         linesDirection[_lineIndex] *= -1;
+        
+        Debug.Log($"Direction {linesDirection[_lineIndex]}");
 
         for (int i = 0; i < columns; i++)
         {
             if (aliens[_lineIndex, i] != null)
             {
                 aliens[_lineIndex, i].Rigidbody.velocity = Vector3.right * linesDirection[_lineIndex] * hSpeed;
+                aliens[_lineIndex, i].SetDirection(linesDirection[_lineIndex] < 0);
             }
         }
-
-        //aliensMoveIndex = Vector2.zero;
-        /*StopAllCoroutines();
-        StartCoroutine(DownDirection());*/
+        
         StartCoroutine(DownDirection(_lineIndex));
     }
 
@@ -209,7 +171,7 @@ public class BoardMovement : MonoBehaviour
         if (lineFasterIndex < aliens.GetLength(0))
         {
             moveNextLineFaster = true;
-            nextTimer = 0.2f;
+            nextTimer = timeBetweenAliensAcceleration;
         }
     }
 
@@ -217,24 +179,42 @@ public class BoardMovement : MonoBehaviour
     {
         hSpeed += increaseSpeedPerDeath;
         vSpeed += increaseSpeedPerDeath;
+        timeBetweenShoot -= timeShootDecreasePerDeath;
+
+        nbAliensAlive--;
+        
+        if (nbAliensAlive <= 0)
+            GameManager.instance.End(true);
     }
 
-    private void Accelerate()
+    private void RandomAlienShoot()
     {
-        durationAcceleration = 0;
-        accelerate = true;
-    }
-    
-    private void Decelerate()
-    {
-        timeBeforeNextAcceleration = Random.Range(randomSpacingBetweenAccelerations.x, randomSpacingBetweenAccelerations.y);
-        accelerate = false;
+        List<Alien> aliensCanShoot = new List<Alien>();
+
+        for (int i = 0; i < columns; i++)
+        {
+            for (int j = rows - 1; j >= 0; j++)
+            {
+                if (aliens[j, i] != null)
+                {
+                    aliensCanShoot.Add(aliens[j, i]);
+                    break;
+                }
+            }
+        }
+
+        if (aliensCanShoot.Count > 0)
+        {
+            aliensCanShoot[Random.Range(0, aliensCanShoot.Count)].Shoot();
+        }
+
+        shootTimer = timeBetweenShoot;
     }
 
     private IEnumerator DownDirection(int _line)
     {
         float start = aliens[_line, 0].transform.position.z;
-        float finalDownDirection = start - spaceBetweenAliens;
+        float finalDownDirection = start - alienDownLength;
         float t = 0f;
 
         while (t <= 1f)
@@ -244,7 +224,8 @@ public class BoardMovement : MonoBehaviour
 
             for (int i = 0; i < columns; i++)
             {
-                aliens[_line, i].Rigidbody.MovePosition(new Vector3(aliens[_line, i].Rigidbody.position.x, aliens[_line, i].Rigidbody.position.y, z));
+                if (aliens[_line, i] != null)
+                    aliens[_line, i].Rigidbody.MovePosition(new Vector3(aliens[_line, i].Rigidbody.position.x, aliens[_line, i].Rigidbody.position.y, z));
             }
 
             yield return null;
@@ -273,16 +254,23 @@ public class BoardMovement : MonoBehaviour
             
             Gizmos.color = Color.black;
             Gizmos.DrawSphere(transform.position, 1f);
-            
-            Gizmos.color = Color.red;
 
             for (int i = 0; i < rows; i++)
             {
+                Gizmos.color = Color.red;
+                
                 for (int j = 0; j < columns; j++)
                 {
                     Vector3 alienPosition = transform.position + Vector3.back * spaceBetweenAliens * (i + 0.5f) +
                                             Vector3.right * spaceBetweenAliens * j;
 
+                    if (j == columns - 1)
+                    {
+                        Gizmos.color = Color.blue;
+                        Gizmos.DrawLine(alienPosition, alienPosition + new Vector3(-1f, 0f, -1f) * alienDownLength);
+                        Gizmos.color = Color.red;
+                    }
+                    
                     Gizmos.DrawCube(alienPosition, Vector3.one);
                 }
             }
