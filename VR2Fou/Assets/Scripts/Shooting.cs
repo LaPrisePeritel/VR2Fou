@@ -1,30 +1,33 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Shooting : MonoBehaviour
 {
-    private const KeyCode SWITCH_BULLET_KEY = KeyCode.B;
-    private const KeyCode SHOOT_KEY = KeyCode.Z;
+    [SerializeField] private InputActionProperty switchBulletKey;
+    [SerializeField] private InputActionProperty ShootKey;
 
     [SerializeField] private Bullet defaultBullet;
     [SerializeField] private List<Bullet> specialBullets;
 
     private Bullet currentBullet;
-    [SerializeField]private Transform bulletStart;
+    [SerializeField] private Transform bulletStart;
 
     private int currentBulletIndex = 1;
 
     [Header("Animation")]
-    [SerializeField]private float intervalShootValue = 0.2f;
+    [SerializeField] private float intervalShootValue = 0.2f;
+
     private float intervalShoot;
     [SerializeField] private Quaternion from;
     [SerializeField] private Quaternion to;
-    [SerializeField]AnimationCurve recoilCurve;
+    [SerializeField] private AnimationCurve recoilCurve;
 
     [Header("ShootSpecial")]
     [SerializeField]
     private Light colorLight;
-    [SerializeField] float intensityMultiplier;
+
+    [SerializeField] private float intensityMultiplier;
     private Bullet nextSpecialBullet;
     private bool shootSpecial = false;
 
@@ -46,10 +49,12 @@ public class Shooting : MonoBehaviour
     private void Update()
     {
         intervalShoot -= Time.deltaTime;
-        if (Input.GetKeyDown(SWITCH_BULLET_KEY))
+
+        if (switchBulletKey.action.WasPressedThisFrame())
             SwitchBullet();
+
         if (intervalShoot <= 0)
-            if (Input.GetKeyDown(SHOOT_KEY))
+            if (ShootKey.action.WasPressedThisFrame())
                 Shoot();
         if (intervalShoot > 0)
             AnimateGun(Time.deltaTime);
@@ -59,7 +64,7 @@ public class Shooting : MonoBehaviour
     {
         if (shootSpecial)
         {
-            currentBullet = nextSpecialBullet;  
+            currentBullet = nextSpecialBullet;
             nextSpecialBullet = specialBullets[Random.Range(0, specialBullets.Count)];
             colorLight.color = nextSpecialBullet.gunLightColor;
             shootSpecial = false;
@@ -71,6 +76,7 @@ public class Shooting : MonoBehaviour
         to *= Quaternion.Euler(new Vector3(0, 0, 360 / GameManager.instance.GaugeRequired));
         intervalShoot = intervalShootValue;
     }
+
     private void AnimateGun(float deltaTime)
     {
         transform.localRotation = Quaternion.Lerp(from, to, deltaTime / intervalShoot);
