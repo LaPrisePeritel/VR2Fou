@@ -1511,7 +1511,7 @@
                     "name": "SpaceShip_Input",
                     "type": "Value",
                     "id": "5504fce8-7f1a-4d14-bc77-d336b638c5ee",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -1529,15 +1529,6 @@
                     "name": "ChangeBulletType",
                     "type": "Button",
                     "id": "577ee9b1-f6ba-4e28-b5b4-62c65c993d23",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "InteractionMode",
-                    "type": "Button",
-                    "id": "26236802-9ea8-45f6-98ba-6cf8b2e5c2e9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -1579,7 +1570,7 @@
                 {
                     "name": "",
                     "id": "62d661a6-251d-413e-9b33-d96cdf536859",
-                    "path": "<Gamepad>/dpad/x",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1588,9 +1579,9 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "1D Axis",
+                    "name": "2D Vector",
                     "id": "d8a6f8c1-b64b-4a0d-af7a-a14203a17a2a",
-                    "path": "1DAxis",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1599,8 +1590,30 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Negative",
+                    "name": "Up",
                     "id": "70f47154-1da4-4701-b027-33808fe670b8",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpaceShip_Input",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Down",
+                    "id": "a00cdab1-0165-46f2-8d5b-70519ed9dbd5",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpaceShip_Input",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Left",
+                    "id": "a3e06faa-90fd-4b29-8da8-34d1cc89d5de",
                     "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
@@ -1610,8 +1623,8 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Positive",
-                    "id": "a00cdab1-0165-46f2-8d5b-70519ed9dbd5",
+                    "name": "Right",
+                    "id": "89f19495-7c7d-4ff3-a798-5cd7de806a91",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
@@ -1623,7 +1636,7 @@
                 {
                     "name": "",
                     "id": "0d57da9b-9f60-4314-aef8-8b23b356cc7b",
-                    "path": "<OculusTouchController>{LeftHand}/thumbstick/x",
+                    "path": "<OculusTouchController>{LeftHand}/thumbstick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1644,8 +1657,8 @@
                 },
                 {
                     "name": "",
-                    "id": "02e21483-dc87-482d-80bd-2381cffa9f9d",
-                    "path": "<Gamepad>/rightTrigger",
+                    "id": "af489d58-713e-471e-9f81-fb7dd04d378d",
+                    "path": "<OculusTouchController>{RightHand}/triggerPressed",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1655,8 +1668,8 @@
                 },
                 {
                     "name": "",
-                    "id": "af489d58-713e-471e-9f81-fb7dd04d378d",
-                    "path": "<OculusTouchController>{RightHand}/triggerPressed",
+                    "id": "1d737c48-30b1-4c73-aacf-bcdfe9d3dc18",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1694,39 +1707,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "ChangeBulletType",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "adce2cbf-5c87-48e2-b05a-d21b40241833",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "InteractionMode",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "971cd88e-a64b-4ad7-9a50-bd0155421368",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "InteractionMode",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2a1109c6-11ac-4e4e-a425-48007abb10e7",
-                    "path": "<OculusTouchController>{LeftHand}/gripPressed",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "InteractionMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

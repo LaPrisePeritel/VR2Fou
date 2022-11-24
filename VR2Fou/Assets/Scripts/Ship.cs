@@ -27,7 +27,7 @@ public class Ship : MonoBehaviour
 
     private void Update()
     {
-        _movement = transform.right * spaceshipInput.action.ReadValue<float>();
+        _movement = transform.right * spaceshipInput.action.ReadValue<Vector2>().x;
     }
 
     private void FixedUpdate()
