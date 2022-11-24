@@ -79,6 +79,11 @@ public class Alien : MonoBehaviour
         {
             onTouchBorder(alienLineIndex);
         }
+
+        if (transform.position.z <= downBorder.z)
+        {
+            onTouchDown();
+        }
     }
 
     public void Shoot()

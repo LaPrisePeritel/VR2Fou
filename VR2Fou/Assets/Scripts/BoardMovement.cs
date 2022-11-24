@@ -23,6 +23,8 @@ public class BoardMovement : MonoBehaviour
 
     private float shootTimer;
 
+    private int nbAliensAlive;
+
     [Header("Initialization")]
     [SerializeField] private Alien aliensPrefab;
     [SerializeField] private float spaceBetweenAliens;
@@ -47,6 +49,8 @@ public class BoardMovement : MonoBehaviour
     private void Awake()
     {
         ship = FindObjectOfType<Ship>();
+
+        nbAliensAlive = rows * columns;
         
         startPosition = transform.position;
         hSpeed = horizontalSpeed;
@@ -176,6 +180,11 @@ public class BoardMovement : MonoBehaviour
         hSpeed += increaseSpeedPerDeath;
         vSpeed += increaseSpeedPerDeath;
         timeBetweenShoot -= timeShootDecreasePerDeath;
+
+        nbAliensAlive--;
+        
+        if (nbAliensAlive <= 0)
+            GameManager.instance.End(true);
     }
 
     private void RandomAlienShoot()
