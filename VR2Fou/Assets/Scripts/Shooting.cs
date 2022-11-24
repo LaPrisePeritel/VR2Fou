@@ -56,7 +56,7 @@ public class Shooting : MonoBehaviour
             SwitchBullet();
 
         if (intervalShoot <= 0)
-            if (ShootKey.action.WasPressedThisFrame())
+            if (ShootKey.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.Z))
                 Shoot();
         if (intervalShoot > 0)
             AnimateGun(Time.deltaTime);
