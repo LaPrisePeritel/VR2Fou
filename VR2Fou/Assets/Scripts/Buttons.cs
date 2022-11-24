@@ -13,7 +13,7 @@ public class Buttons : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    private void OnMouseDown()
+    public void IsCliked()
     {
         Event.Invoke();
         animator.SetTrigger("ButtonClicked");

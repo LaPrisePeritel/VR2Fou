@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 internal sealed class CameraController : MonoBehaviour
 {
     [SerializeField] private InputActionProperty camInput;
+    [SerializeField] private InputActionProperty interactInput;
+    [SerializeField] private LayerMask mask;
 
     private const float Y_ROT_LIMIT = 90;
 
@@ -25,6 +27,17 @@ internal sealed class CameraController : MonoBehaviour
 
     private void Update()
     {
+        if (interactInput.action.WasPressedThisFrame())
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            Debug.DrawRay(ray.origin, ray.direction * 100, Color.green, 2f);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, 100, mask))
+                if (hit.collider.gameObject.GetComponent<Buttons>() != null)
+                    hit.collider.gameObject.GetComponent<Buttons>().IsCliked();  
+        }
+
         Vector2 axis = camInput.action.ReadValue<Vector2>();
         _rotation.x += axis.x * Sensitivity;
         _rotation.y += axis.y * Sensitivity;
