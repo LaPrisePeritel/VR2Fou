@@ -1387,19 +1387,6 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: -3535012365033617513, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
-  interactionModeInput:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Interaction Mode Input
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: b8334cb4-f507-4f91-995a-d695ad97bfb8
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: -5350186638867500075, guid: c348712bda248c246b8c49b3db54643f,
-      type: 3}
   <Sensitivity>k__BackingField: 0.1
   _body: {fileID: 5465817933697134833}
 --- !u!1 &5465817934977579462
@@ -2680,7 +2667,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 4526616788325894911, guid: c348712bda248c246b8c49b3db54643f,
+    m_Reference: {fileID: -5315192424057578616, guid: 596cc86f683fa6248bcd0298b65b2072,
       type: 3}
   ShootKey:
     m_UseReference: 1
@@ -2693,7 +2680,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 6686914974935250158, guid: c348712bda248c246b8c49b3db54643f,
+    m_Reference: {fileID: 3464749222348889340, guid: 596cc86f683fa6248bcd0298b65b2072,
       type: 3}
   defaultBullet: {fileID: 3884862862415128373, guid: 788d642bd7a709e4cb508713576d0f98,
     type: 3}
