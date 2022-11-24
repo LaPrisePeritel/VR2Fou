@@ -47,7 +47,7 @@ public class Alien : MonoBehaviour
     {
         onTouchBorder = _onTouchBorder;
         alienLineIndex = _alienLineIndex;
-        
+
         onTouchDown = _onTouchDown;
         leftBorder = _leftBorder;
         rightBorder = _rightBorder;
@@ -90,7 +90,7 @@ public class Alien : MonoBehaviour
     {
         Instantiate(alienBulletPrefab, transform.position, Quaternion.identity).Initiate(Vector3.back, transform.position);
     }
-    
+
     private void OnDeath()
     {
         isDead = true;
@@ -100,7 +100,7 @@ public class Alien : MonoBehaviour
     private IEnumerator BlackHoleDeath(Vector3 _holePosition, Material _vacuumMaterial)
     {
         Camera.main.GetComponent<CameraShake>().LaunchShake(.3f, .1f);
-        
+
         meshRenderer.material = _vacuumMaterial;
         meshRenderer.material.SetVector("_Black_Hole_Position", _holePosition);
 
@@ -114,7 +114,7 @@ public class Alien : MonoBehaviour
             float value = Mathf.Lerp(0f, 1f, t);
             meshRenderer.material.SetFloat("_Effect", value);
         }
-        
+
         //Camera.main.GetComponent<CameraShake>().LaunchShake(0.5f, 0.3f);
         Destroy(gameObject);
     }
@@ -123,7 +123,7 @@ public class Alien : MonoBehaviour
     {
         StartCoroutine(BalloonDeath(balloonMaterial));
     }
-    
+
     private IEnumerator BalloonDeath(Material _baloonMaterial)
     {
         meshRenderer.material = _baloonMaterial;
@@ -131,7 +131,7 @@ public class Alien : MonoBehaviour
 
         bool particlePlayed = false;
         ParticleSystem confettiParticles = Instantiate(confettiParticlesPrefab, transform.position, Quaternion.identity);
-        
+
         float t = 0f;
 
         while (t <= 1f)
@@ -163,10 +163,10 @@ public class Alien : MonoBehaviour
     private IEnumerator BeingDust(Material _material)
     {
         meshRenderer.material = _material;
-        
+
         ParticleSystem dustParticles = Instantiate(dustParticlesPrefab, transform.position, Quaternion.identity);
         dustParticles.Play();
-        
+
         float t = 0f;
 
         while (t <= 1f)
@@ -177,14 +177,14 @@ public class Alien : MonoBehaviour
             float value = Mathf.Lerp(0f, 1f, t);
             meshRenderer.material.SetFloat("_Dissolve", value);
         }
-        
+
         dustParticles.Stop();
-        
+
         while (dustParticles.IsAlive())
         {
             yield return null;
         }
-        
+
         Destroy(dustParticles.gameObject);
         Destroy(gameObject);
     }
@@ -207,7 +207,7 @@ public class Alien : MonoBehaviour
         Destroy(lightingParts.gameObject);
         Destroy(gameObject);
     }
-    
+
     public void Hitted(Bullet.EBulletType _bulletType, Vector3 _bulletPosition)
     {
         if (isDead)
@@ -220,7 +220,7 @@ public class Alien : MonoBehaviour
         transform.parent = null;
 
         StopAllCoroutines();
-        
+
         switch (_bulletType)
         {
             default:
@@ -228,20 +228,23 @@ public class Alien : MonoBehaviour
                 break;
             case Bullet.EBulletType.BlackHole:
                 StartCoroutine(BlackHoleDeath(_bulletPosition, vacuumMaterial));
+                JSAM.AudioManager.PlaySound(JSAM.Sounds.BlackHole_aspiration);
                 break;
             case Bullet.EBulletType.Laser:
                 Destroy(gameObject);
+                JSAM.AudioManager.PlaySound(JSAM.Sounds.Baloon_Explosion);
                 break;
             case Bullet.EBulletType.Lightning:
                 StartCoroutine(Lightning());
+                JSAM.AudioManager.PlaySound(JSAM.Sounds.Baloon_Explosion);
                 break;
-
             case Bullet.EBulletType.Balloon:
                 animator.SetTrigger("BalloonDeath");
+                JSAM.AudioManager.PlaySound(JSAM.Sounds.Baloon_Explosion);
                 break;
-
             case Bullet.EBulletType.Dust:
                 StartCoroutine(BeingDust(balloonMaterial));
+                JSAM.AudioManager.PlaySound(JSAM.Sounds.Baloon_Explosion);
                 break;
         }
     }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AlienBullet : Bullet
@@ -10,6 +8,8 @@ public class AlienBullet : Bullet
             return;
 
         Debug.Log("Player has been hit by an alien's bullet");
+
+        JSAM.AudioManager.PlaySound(JSAM.Sounds.Player_Hit);
 
         Destroy(gameObject);
     }
