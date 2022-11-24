@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Alien : MonoBehaviour
@@ -31,6 +32,11 @@ public class Alien : MonoBehaviour
     [SerializeField] private ParticleSystem dustParticlesPrefab;
     [SerializeField] private ParticleSystem lightningParticlesPrefab;
 
+    [Header("Shooting")]
+    [SerializeField] private Bullet alienBulletPrefab;
+
+    [SerializeField] private List<Material> randomMaterials;
+
     private void Awake()
     {
         deathParticle.Stop();
@@ -38,6 +44,7 @@ public class Alien : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
+        meshRenderer.material = randomMaterials[UnityEngine.Random.Range(0, randomMaterials.Count)];
     }
 
     public void Initialisation(Action<int> _onTouchBorder, int _alienLineIndex, Action _onTouchDown, Vector3 _leftBorder, Vector3 _rightBorder, Vector3 _downBorder, Action _onDeath)
@@ -76,7 +83,18 @@ public class Alien : MonoBehaviour
         {
             onTouchBorder(alienLineIndex);
         }
+
+        if (transform.position.z <= downBorder.z)
+        {
+            onTouchDown();
+        }
     }
+
+    public void Shoot()
+    {
+        Instantiate(alienBulletPrefab, transform.position, Quaternion.identity).Initiate(Vector3.back, transform.position);
+    }
+    
     private void OnDeath()
     {
         isDead = true;
@@ -193,6 +211,7 @@ public class Alien : MonoBehaviour
         Destroy(lightingParts.gameObject);
         Destroy(gameObject);
     }
+    
     public void Hitted(Bullet.EBulletType _bulletType, Vector3 _bulletPosition)
     {
         if (isDead)

@@ -18,7 +18,6 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] private Buttons playButton;
     [SerializeField] private Buttons quitButton;
-    [SerializeField] private Buttons optionsButton;
 
     [SerializeField] private GameObject hyperspace;
     [SerializeField] private AnimationCurve hyperspaceCurve;
@@ -31,7 +30,6 @@ public class MenuManager : MonoBehaviour
     {
         playButton.Event.AddListener(() => StartCoroutine(HyperspaceEffect()));
         quitButton.Event.AddListener(Application.Quit);
-        //optionsButton.Event.AddListener();
         cam = Camera.main;
     }
 
@@ -84,7 +82,7 @@ public class MenuManager : MonoBehaviour
         hyperspaceParticle.transform.position = new Vector3(startPosition.x, startPosition.y, 0.0f);
         Destroy(hyperspaceParticle);
 
-        //SceneManager.LoadScene("BasicProto");
+        SceneManager.LoadScene("BasicProto");
     }
 
     private IEnumerator EnterHyperspace()

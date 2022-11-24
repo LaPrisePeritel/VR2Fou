@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,7 +19,11 @@ public class BoardMovement : MonoBehaviour
     private Vector3 startPosition;
     private float moveDirection;
 
-    private float hSpeed, vSpeed;
+    private float hSpeed, vSpeed, shootTimeBetween;
+
+    private float shootTimer;
+
+    private int nbAliensAlive;
 
     [Header("Initialization")]
     [SerializeField] private Alien aliensPrefab;
@@ -36,15 +41,22 @@ public class BoardMovement : MonoBehaviour
     [SerializeField] private float speedAcceleration;
     [SerializeField] private float timeBetweenAliensAcceleration;
     [SerializeField] private float increaseSpeedPerDeath;
-    
+
+    [Header("Shooting")]
+    [SerializeField] private float timeBetweenShoot;
+    [SerializeField] private float timeShootDecreasePerDeath;
 
     private void Awake()
     {
         ship = FindObjectOfType<Ship>();
+
+        nbAliensAlive = rows * columns;
         
         startPosition = transform.position;
         hSpeed = horizontalSpeed;
         vSpeed = verticalSpeed;
+        shootTimeBetween = timeBetweenShoot;
+        shootTimer = shootTimeBetween;
 
         linesDirection = new int[rows];
 
@@ -112,6 +124,15 @@ public class BoardMovement : MonoBehaviour
                 MoveNextLineFaster();
             }
         }
+
+        if (shootTimer > 0f)
+        {
+            shootTimer -= Time.deltaTime;
+        }
+        else
+        {
+            RandomAlienShoot();
+        }
     }
     
     private void ChangeDirection(int _lineIndex)
@@ -158,6 +179,36 @@ public class BoardMovement : MonoBehaviour
     {
         hSpeed += increaseSpeedPerDeath;
         vSpeed += increaseSpeedPerDeath;
+        timeBetweenShoot -= timeShootDecreasePerDeath;
+
+        nbAliensAlive--;
+        
+        if (nbAliensAlive <= 0)
+            GameManager.instance.End(true);
+    }
+
+    private void RandomAlienShoot()
+    {
+        List<Alien> aliensCanShoot = new List<Alien>();
+
+        for (int i = 0; i < columns; i++)
+        {
+            for (int j = rows - 1; j >= 0; j++)
+            {
+                if (aliens[j, i] != null)
+                {
+                    aliensCanShoot.Add(aliens[j, i]);
+                    break;
+                }
+            }
+        }
+
+        if (aliensCanShoot.Count > 0)
+        {
+            aliensCanShoot[Random.Range(0, aliensCanShoot.Count)].Shoot();
+        }
+
+        shootTimer = timeBetweenShoot;
     }
 
     private IEnumerator DownDirection(int _line)
