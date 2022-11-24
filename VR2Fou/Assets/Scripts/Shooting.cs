@@ -19,8 +19,8 @@ public class Shooting : MonoBehaviour
     [SerializeField] private float intervalShootValue = 0.2f;
 
     private float intervalShoot;
-    [SerializeField] private Quaternion from;
-    [SerializeField] private Quaternion to;
+    private Quaternion from;
+    private Quaternion to;
     [SerializeField]AnimationCurve recoilCurve;
     private Vector3 recoilPosition;
 
@@ -41,7 +41,7 @@ public class Shooting : MonoBehaviour
         recoilPosition = transform.localPosition;
     }
 
-    private void OnEnable()
+    private void Start()
     {
         GameManager.instance.EvCombo.AddListener(ShootSpecial);
     }

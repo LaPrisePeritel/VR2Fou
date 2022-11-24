@@ -97,8 +97,7 @@ public class Alien : MonoBehaviour
 
     private void OnDeath()
     {
-        isDead = true;
-        deathParticle.Play();
+        //deathParticle.Play();
     }
 
     private IEnumerator BlackHoleDeath(Vector3 _holePosition, Material _vacuumMaterial)
@@ -119,7 +118,7 @@ public class Alien : MonoBehaviour
             meshRenderer.material.SetFloat("_Effect", value);
         }
 
-        //Camera.main.GetComponent<CameraShake>().LaunchShake(0.5f, 0.3f);
+        Camera.main.GetComponent<CameraShake>().LaunchShake(0.5f, 0.3f);
         Destroy(gameObject);
     }
 
@@ -134,6 +133,7 @@ public class Alien : MonoBehaviour
         //meshRenderer.material.SetVector("_Black_Hole_Position", _holePosition);
 
         bool particlePlayed = false;
+        Camera.main.GetComponent<CameraShake>().LaunchShake(0.5f, 0.3f);
         ParticleSystem confettiParticles = Instantiate(confettiParticlesPrefab, transform.position, Quaternion.identity);
 
         float t = 0f;
@@ -148,7 +148,7 @@ public class Alien : MonoBehaviour
 
             if (!particlePlayed && value >= 0.75f)
             {
-                Camera.main.GetComponent<CameraShake>().LaunchShake(0.2f, 0.3f);
+                //Camera.main.GetComponent<CameraShake>().LaunchShake(0.2f, 0.3f);
                 confettiParticles.Play();
                 particlePlayed = true;
             }
@@ -159,7 +159,6 @@ public class Alien : MonoBehaviour
             yield return null;
         }
 
-        //Camera.main.GetComponent<CameraShake>().LaunchShake(0.5f, 0.3f);
         Destroy(confettiParticles.gameObject);
         Destroy(gameObject);
     }
@@ -188,7 +187,6 @@ public class Alien : MonoBehaviour
         {
             yield return null;
         }
-
         Destroy(dustParticles.gameObject);
         Destroy(gameObject);
     }
@@ -219,7 +217,13 @@ public class Alien : MonoBehaviour
 
         isDead = true; //TEMP
 
+        foreach (BoxCollider bc in GetComponents<BoxCollider>() )
+        {
+            bc.enabled = false;
+        }
+
         GameManager.instance.IncrementCombo();
+        onDeath.Invoke();
 
         transform.parent = null;
 
