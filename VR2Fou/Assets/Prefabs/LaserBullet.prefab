@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletType: 0
-  bulletSpeed: 1
+  bulletSpeed: 0.1
   gunLightColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!54 &8104160852624822380
 Rigidbody:
