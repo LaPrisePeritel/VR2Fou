@@ -1296,7 +1296,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1433246195}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.5, z: 10}
+  m_LocalPosition: {x: 0, y: 0.02, z: 10}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1401,7 +1401,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
-  m_Range: 5
+  m_Range: 1.52
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -6847,9 +6847,29 @@ MonoBehaviour:
   - {fileID: 1305927853706134372, guid: 8fae210c0710c5c4ca28bea5de29663d, type: 3}
   bulletStart: {fileID: 1476174751}
   intervalShootValue: 0.2
+  from: {x: 0, y: 0, z: 0, w: 0}
+  to: {x: 0, y: 0, z: 0, w: 0}
   recoilCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.1935236
+      outSlope: -2.7823052
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.21408154
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1.2453706
+      outSlope: -1.2453706
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.3123011
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

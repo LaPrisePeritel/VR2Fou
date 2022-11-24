@@ -20,6 +20,7 @@ public class Shooting : MonoBehaviour
     [SerializeField] private Quaternion from;
     [SerializeField] private Quaternion to;
     [SerializeField]AnimationCurve recoilCurve;
+    private Vector3 recoilPosition;
 
     [Header("ShootSpecial")]
     [SerializeField]
@@ -34,6 +35,7 @@ public class Shooting : MonoBehaviour
         to = from;
         nextSpecialBullet = specialBullets[Random.Range(0, specialBullets.Count)];
         currentBullet = defaultBullet;
+        recoilPosition = transform.localPosition;
     }
 
     private void OnEnable()
@@ -74,6 +76,7 @@ public class Shooting : MonoBehaviour
     private void AnimateGun(float deltaTime)
     {
         transform.localRotation = Quaternion.Lerp(from, to, deltaTime / intervalShoot);
+        transform.localPosition = Vector3.up * recoilCurve.Evaluate(intervalShoot / intervalShootValue) + recoilPosition;
     }
 
     private void SwitchBullet() => currentBullet = specialBullets[currentBulletIndex++ % specialBullets.Count];
