@@ -64,7 +64,7 @@ public class MenuManager : MonoBehaviour
                     break;
 
                 case HYPERSPACE_STATE.IN_HYPERSPACE:
-                    cam.fieldOfView = 120.0f;
+                    cam.fieldOfView = 90.0f;
                     break;
 
                 case HYPERSPACE_STATE.EXIT_HYPERSPACE:
@@ -91,12 +91,12 @@ public class MenuManager : MonoBehaviour
         float time = 0.0f;
         while (time < 4.0f)
         {
-            cam.fieldOfView = Mathf.Lerp(80.0f, 120.0f, time / 0.2f);
+            cam.fieldOfView = Mathf.Lerp(60.0f, 90.0f, time / 0.2f);
             time += Time.deltaTime;
             yield return null;
         }
 
-        cam.fieldOfView = 120.0f;
+        cam.fieldOfView = 90.0f;
         inChangingPhase = true;
     }
 
@@ -105,12 +105,12 @@ public class MenuManager : MonoBehaviour
         float time = 0.0f;
         while (time < 5.0f)
         {
-            cam.fieldOfView = Mathf.Lerp(120.0f, 80.0f, time / 5.0f);
+            cam.fieldOfView = Mathf.Lerp(90.0f, 60.0f, time / 5.0f);
             time += Time.deltaTime;
             yield return null;
         }
 
-        cam.fieldOfView = 80.0f;
+        cam.fieldOfView = 60.0f;
         inChangingPhase = true;
     }
 }
