@@ -6,7 +6,8 @@ public class BulletBlackhole : Bullet
     private float f = 0;
 
     [SerializeField] private AnimationCurve curveGrowth;
-    private Vector3 baseScale;
+    Vector3 baseScale;
+    [SerializeField] private float durationGrowth;
     public override void Initiate(Vector3 dir, Vector3 initPos)
     {
         base.Initiate(dir, initPos);
@@ -20,7 +21,7 @@ public class BulletBlackhole : Bullet
             transform.localScale = Vector3.Lerp(baseScale, baseScale * 2, curveGrowth.Evaluate(f));
             f += Time.deltaTime;
         }
-        if (f >= 1)
+        if (f >= durationGrowth)
         {
             Destroy(gameObject);
         }

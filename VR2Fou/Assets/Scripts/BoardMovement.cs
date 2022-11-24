@@ -51,7 +51,7 @@ public class BoardMovement : MonoBehaviour
         ship = FindObjectOfType<Ship>();
 
         nbAliensAlive = rows * columns;
-        
+
         startPosition = transform.position;
         hSpeed = horizontalSpeed;
         vSpeed = verticalSpeed;
@@ -64,12 +64,12 @@ public class BoardMovement : MonoBehaviour
                         Vector3.Distance(transform.position, transform.position + Vector3.right * rightBorderOffset)
             ? -1f
             : 1f;
-        
+
         for (int i = 0; i < linesDirection.Length; i++)
         {
             linesDirection[i] = (int)-moveDirection;
         }
-        
+
         SpawnAliens();
 
         moveNextLineFaster = true;
@@ -78,7 +78,6 @@ public class BoardMovement : MonoBehaviour
     private void SpawnAliens()
     {
         aliens = new Alien[rows, columns];
-
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
@@ -95,10 +94,11 @@ public class BoardMovement : MonoBehaviour
                 aliens[i, j].transform.parent = transform;
             }
         }
-    }
+}
 
     private void Start()
     {
+
         for (int i = 0 ; i < rows; i++)
             ChangeDirection(i);
         
@@ -133,8 +133,9 @@ public class BoardMovement : MonoBehaviour
         {
             RandomAlienShoot();
         }
+
     }
-    
+
     private void ChangeDirection(int _lineIndex)
     {
         if (_lineIndex < 0 || _lineIndex >= rows)
@@ -182,9 +183,10 @@ public class BoardMovement : MonoBehaviour
         timeBetweenShoot -= timeShootDecreasePerDeath;
 
         nbAliensAlive--;
-        
         if (nbAliensAlive <= 0)
-            GameManager.instance.End(true);
+        {
+            GameManager.instance.PassRound();
+        }
     }
 
     private void RandomAlienShoot()
@@ -193,7 +195,7 @@ public class BoardMovement : MonoBehaviour
 
         for (int i = 0; i < columns; i++)
         {
-            for (int j = rows - 1; j >= 0; j++)
+            for (int j = rows - 1; j >= 0; j--)
             {
                 if (aliens[j, i] != null)
                 {

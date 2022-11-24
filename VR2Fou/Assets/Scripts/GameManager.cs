@@ -20,7 +20,8 @@ public class GameManager : MonoBehaviour
     public float timer;
 
     [Header("Rounds")]
-    public int currentRound;
+    [SerializeField] private int totalRound;
+    private int currentRound = 0;
 
     private void Awake()
     {
@@ -30,10 +31,19 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
+    public void PassRound() 
+    {
+        currentRound++;
+        if(currentRound >= totalRound)
+            End(true);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     public void End(bool _victory)
     {
         Debug.Log($"Victory: {_victory}");
-
+        currentRound = 0;
         if (_victory)
         {
             SceneManager.LoadScene(0);
