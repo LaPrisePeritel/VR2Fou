@@ -31,6 +31,9 @@ public class Alien : MonoBehaviour
     [SerializeField] private ParticleSystem dustParticlesPrefab;
     [SerializeField] private ParticleSystem lightningParticlesPrefab;
 
+    [Header("Shooting")]
+    [SerializeField] private Bullet alienBulletPrefab;
+
     private void Awake()
     {
         deathParticle.Stop();
@@ -77,6 +80,12 @@ public class Alien : MonoBehaviour
             onTouchBorder(alienLineIndex);
         }
     }
+
+    public void Shoot()
+    {
+        Instantiate(alienBulletPrefab, transform.position, Quaternion.identity).Initiate(Vector3.back, transform.position);
+    }
+    
     private void OnDeath()
     {
         isDead = true;
@@ -193,6 +202,7 @@ public class Alien : MonoBehaviour
         Destroy(lightingParts.gameObject);
         Destroy(gameObject);
     }
+    
     public void Hitted(Bullet.EBulletType _bulletType, Vector3 _bulletPosition)
     {
         if (isDead)
