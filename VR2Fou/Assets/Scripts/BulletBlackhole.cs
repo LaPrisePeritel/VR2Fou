@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletBlackhole : Bullet
 {
-    bool grow;
-    float f = 0;
+    private bool grow;
+    private float f = 0;
 
     [SerializeField] private AnimationCurve curveGrowth;
-    Vector3 baseScale;
+    private Vector3 baseScale;
     public override void Initiate(Vector3 dir, Vector3 initPos)
     {
         base.Initiate(dir, initPos);
