@@ -21,14 +21,15 @@ public class Alien : MonoBehaviour
     [SerializeField] private LayerMask aliensMask;
 
     private bool isDead;
-    private float deathDuration = 0;
 
     [Header("Materials")]
     [SerializeField] private Material vacuumMaterial;
+
     [SerializeField] private Material balloonMaterial;
 
     [Header("Particles")]
     [SerializeField] private ParticleSystem confettiParticlesPrefab;
+
     [SerializeField] private ParticleSystem dustParticlesPrefab;
     [SerializeField] private ParticleSystem lightningParticlesPrefab;
 
@@ -216,7 +217,7 @@ public class Alien : MonoBehaviour
 
         isDead = true; //TEMP
 
-        foreach (BoxCollider bc in GetComponents<BoxCollider>() )
+        foreach (BoxCollider bc in GetComponents<BoxCollider>())
         {
             bc.enabled = false;
         }
@@ -233,22 +234,27 @@ public class Alien : MonoBehaviour
             default:
                 Destroy(gameObject);
                 break;
+
             case Bullet.EBulletType.BlackHole:
                 StartCoroutine(BlackHoleDeath(_bulletPosition, vacuumMaterial));
                 JSAM.AudioManager.PlaySound(JSAM.Sounds.BlackHole_aspiration);
                 break;
+
             case Bullet.EBulletType.Laser:
                 Destroy(gameObject);
                 JSAM.AudioManager.PlaySound(JSAM.Sounds.Baloon_Explosion);
                 break;
+
             case Bullet.EBulletType.Lightning:
                 StartCoroutine(Lightning());
                 JSAM.AudioManager.PlaySound(JSAM.Sounds.Baloon_Explosion);
                 break;
+
             case Bullet.EBulletType.Balloon:
                 animator.SetTrigger("BalloonDeath");
                 JSAM.AudioManager.PlaySound(JSAM.Sounds.Baloon_Explosion);
                 break;
+
             case Bullet.EBulletType.Dust:
                 StartCoroutine(BeingDust(balloonMaterial));
                 JSAM.AudioManager.PlaySound(JSAM.Sounds.Baloon_Explosion);

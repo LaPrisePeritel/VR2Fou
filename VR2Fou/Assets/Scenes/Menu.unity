@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.052675273, g: 0.01788594, b: 0.11802831, a: 1}
+  m_IndirectSpecularColor: {r: 0.052675337, g: 0.01788597, b: 0.11802834, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5927,11 +5927,29 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2633474860438488012, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: spaceshipInput.m_Reference
+      value: 
+      objectReference: {fileID: -3280531657046564430, guid: c348712bda248c246b8c49b3db54643f,
+        type: 3}
     - target: {fileID: 2830284997501866988, guid: 8ef38bcde5015e14db9efb4f99af556f,
         type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3924717038188992882, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: ShootKey.m_Reference
+      value: 
+      objectReference: {fileID: 7999838512155454579, guid: c348712bda248c246b8c49b3db54643f,
+        type: 3}
+    - target: {fileID: 3924717038188992882, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: switchBulletKey.m_Reference
+      value: 
+      objectReference: {fileID: 7806967178150508997, guid: c348712bda248c246b8c49b3db54643f,
+        type: 3}
     - target: {fileID: 3987726347093047521, guid: 8ef38bcde5015e14db9efb4f99af556f,
         type: 3}
       propertyPath: m_Layer
@@ -5942,26 +5960,64 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5465817933544635874, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5465817933544635877, guid: 8ef38bcde5015e14db9efb4f99af556f,
         type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465817933697134832, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: m_CameraYOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465817933697134832, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: m_RequestedTrackingOriginMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465817933697134833, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.576
       objectReference: {fileID: 0}
     - target: {fileID: 5465817933697134834, guid: 8ef38bcde5015e14db9efb4f99af556f,
         type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5465817933697134835, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: m_ActionAssets.Array.data[0]
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f,
+        type: 3}
     - target: {fileID: 5465817933700188160, guid: 8ef38bcde5015e14db9efb4f99af556f,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5465817933700188162, guid: 8ef38bcde5015e14db9efb4f99af556f,
         type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5465817933700188172, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: camInput.m_Reference
+      value: 
+      objectReference: {fileID: 8899111634187227800, guid: c348712bda248c246b8c49b3db54643f,
+        type: 3}
+    - target: {fileID: 5465817933700188172, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: interactInput.m_Reference
+      value: 
+      objectReference: {fileID: -1678603691787433005, guid: c348712bda248c246b8c49b3db54643f,
+        type: 3}
     - target: {fileID: 5465817933700188172, guid: 8ef38bcde5015e14db9efb4f99af556f,
         type: 3}
       propertyPath: InteractInput.m_Action.m_Id
@@ -5982,10 +6038,25 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5465817934977579462, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5465817935055064994, guid: 8ef38bcde5015e14db9efb4f99af556f,
         type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465817935055064994, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465817935055065006, guid: 8ef38bcde5015e14db9efb4f99af556f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5465817935055065007, guid: 8ef38bcde5015e14db9efb4f99af556f,
         type: 3}
@@ -6092,7 +6163,8 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2980990689870338850, guid: 8ef38bcde5015e14db9efb4f99af556f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8ef38bcde5015e14db9efb4f99af556f, type: 3}
 --- !u!81 &5465817934668329559 stripped
 AudioListener:

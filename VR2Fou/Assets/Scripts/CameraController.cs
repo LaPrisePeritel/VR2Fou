@@ -25,17 +25,18 @@ internal sealed class CameraController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (interactInput.action.WasPressedThisFrame())
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
             Debug.DrawRay(ray.origin, ray.direction * 100, Color.green, 2f);
 
             if (Physics.Raycast(ray, out RaycastHit hit, 100, mask))
                 if (hit.collider.gameObject.GetComponent<Buttons>() != null)
-                    hit.collider.gameObject.GetComponent<Buttons>().IsCliked();  
+                    hit.collider.gameObject.GetComponent<Buttons>().IsCliked();
         }
 
         Vector2 axis = camInput.action.ReadValue<Vector2>();
