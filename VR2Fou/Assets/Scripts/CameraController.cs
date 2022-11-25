@@ -21,10 +21,17 @@ internal sealed class CameraController : MonoBehaviour
 
     private Vector2 _rotation;
 
-    private void Awake()
+    private bool _canLook = true;
+    public bool CanLook
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        get => _canLook;
+        set
+        {
+            _canLook = value;
+
+            transform.localRotation = Quaternion.identity;
+            _body.localRotation = Quaternion.identity;
+        }
     }
 
     private void LateUpdate()
@@ -39,6 +46,8 @@ internal sealed class CameraController : MonoBehaviour
                 if (hit.collider.gameObject.GetComponent<Buttons>() != null)
                     hit.collider.gameObject.GetComponent<Buttons>().IsCliked();
         }
+
+        if (!CanLook) return;
 
         Vector2 axis = camInput.action.ReadValue<Vector2>();
         _rotation.x += axis.x * Sensitivity;

@@ -21,7 +21,7 @@ public class Shooting : MonoBehaviour
     private float intervalShoot;
     private Quaternion from;
     private Quaternion to;
-    [SerializeField]AnimationCurve recoilCurve;
+    [SerializeField] private AnimationCurve recoilCurve;
     private Vector3 recoilPosition;
 
     [Header("ShootSpecial")]
@@ -31,6 +31,8 @@ public class Shooting : MonoBehaviour
     [SerializeField] private float intensityMultiplier;
     private Bullet nextSpecialBullet;
     private bool shootSpecial = false;
+
+    public bool CanShoot = true;
 
     private void Awake()
     {
@@ -64,6 +66,8 @@ public class Shooting : MonoBehaviour
 
     private void Shoot()
     {
+        if (!CanShoot) return;
+
         if (shootSpecial)
         {
             currentBullet = nextSpecialBullet;

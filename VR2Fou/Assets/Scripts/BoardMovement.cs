@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,6 +45,8 @@ public class BoardMovement : MonoBehaviour
     [SerializeField] private float timeBetweenShoot;
     [SerializeField] private float timeShootDecreasePerDeath;
 
+    public bool CanShoot = true;
+
     private void Awake()
     {
         ship = FindObjectOfType<Ship>();
@@ -83,7 +84,7 @@ public class BoardMovement : MonoBehaviour
             for (int j = 0; j < columns; j++)
             {
                 Vector3 alienPosition = transform.position + Vector3.back * spaceBetweenAliens * (i + 0.5f) +
-                                        Vector3.right * spaceBetweenAliens * j ;
+                                        Vector3.right * spaceBetweenAliens * j;
                 aliens[i, j] = Instantiate(aliensPrefab, alienPosition, Quaternion.identity);
                 aliens[i, j].Initialisation(ChangeDirection, i,
                     () => GameManager.instance.End(false),
@@ -94,14 +95,13 @@ public class BoardMovement : MonoBehaviour
                 aliens[i, j].transform.parent = transform;
             }
         }
-}
+    }
 
     private void Start()
     {
-
-        for (int i = 0 ; i < rows; i++)
+        for (int i = 0; i < rows; i++)
             ChangeDirection(i);
-        
+
         MoveNextLineFaster();
     }
 
@@ -109,7 +109,7 @@ public class BoardMovement : MonoBehaviour
     {
         return aliens;
     }
-    
+
     private void Update()
     {
         if (moveNextLineFaster)
@@ -133,7 +133,6 @@ public class BoardMovement : MonoBehaviour
         {
             RandomAlienShoot();
         }
-
     }
 
     private void ChangeDirection(int _lineIndex)
@@ -142,7 +141,7 @@ public class BoardMovement : MonoBehaviour
             return;
 
         linesDirection[_lineIndex] *= -1;
-        
+
         Debug.Log($"Direction {linesDirection[_lineIndex]}");
 
         for (int i = 0; i < columns; i++)
@@ -153,7 +152,7 @@ public class BoardMovement : MonoBehaviour
                 aliens[_lineIndex, i].SetDirection(linesDirection[_lineIndex] < 0);
             }
         }
-        
+
         StartCoroutine(DownDirection(_lineIndex));
     }
 
@@ -191,6 +190,8 @@ public class BoardMovement : MonoBehaviour
 
     private void RandomAlienShoot()
     {
+        if (!CanShoot) return;
+
         List<Alien> aliensCanShoot = new List<Alien>();
 
         for (int i = 0; i < columns; i++)
@@ -253,14 +254,14 @@ public class BoardMovement : MonoBehaviour
 
             Gizmos.DrawWireSphere(transform.position + Vector3.left * leftBorderOffset, 0.5f);
             Gizmos.DrawWireSphere(transform.position + Vector3.right * rightBorderOffset, 0.5f);
-            
+
             Gizmos.color = Color.black;
             Gizmos.DrawSphere(transform.position, 1f);
 
             for (int i = 0; i < rows; i++)
             {
                 Gizmos.color = Color.red;
-                
+
                 for (int j = 0; j < columns; j++)
                 {
                     Vector3 alienPosition = transform.position + Vector3.back * spaceBetweenAliens * (i + 0.5f) +
@@ -272,7 +273,7 @@ public class BoardMovement : MonoBehaviour
                         Gizmos.DrawLine(alienPosition, alienPosition + new Vector3(-1f, 0f, -1f) * alienDownLength);
                         Gizmos.color = Color.red;
                     }
-                    
+
                     Gizmos.DrawCube(alienPosition, Vector3.one);
                 }
             }
