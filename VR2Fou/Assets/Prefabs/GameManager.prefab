@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7984722084171280099}
   - component: {fileID: 790820443243386881}
-  - component: {fileID: 2060820391}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -53,30 +52,3 @@ MonoBehaviour:
       m_Calls: []
   timer: 0
   totalRound: 3
---- !u!114 &2060820391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4639109632851363416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f638dd97a531af44fb334f13a5b63ce7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aliensPrefab: {fileID: 2935624742507014495, guid: 48413505a04e27946bccf8ef7294bd2c,
-    type: 3}
-  spaceBetweenAliens: 2
-  alienDownLength: 1
-  rows: 5
-  columns: 5
-  leftBorderOffset: 0
-  rightBorderOffset: 15
-  horizontalSpeed: 1
-  verticalSpeed: 1
-  speedAcceleration: 1.4
-  timeBetweenAliensAcceleration: 1
-  increaseSpeedPerDeath: 0.1
-  timeBetweenShoot: 5
-  timeShootDecreasePerDeath: 0.05
