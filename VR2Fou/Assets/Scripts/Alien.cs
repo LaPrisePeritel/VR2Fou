@@ -21,14 +21,15 @@ public class Alien : MonoBehaviour
     [SerializeField] private LayerMask aliensMask;
 
     private bool isDead;
-    private float deathDuration = 0;
 
     [Header("Materials")]
     [SerializeField] private Material vacuumMaterial;
+
     [SerializeField] private Material balloonMaterial;
 
     [Header("Particles")]
     [SerializeField] private ParticleSystem confettiParticlesPrefab;
+
     [SerializeField] private ParticleSystem dustParticlesPrefab;
     [SerializeField] private ParticleSystem lightningParticlesPrefab;
 
@@ -102,7 +103,7 @@ public class Alien : MonoBehaviour
 
     private IEnumerator BlackHoleDeath(Vector3 _holePosition, Material _vacuumMaterial)
     {
-        Camera.main.GetComponent<CameraShake>().LaunchShake(.3f, .1f);
+        Camera.main.GetComponent<CameraShake>().LaunchShake(.3f, .01f);
 
         meshRenderer.material = _vacuumMaterial;
         meshRenderer.material.SetVector("_Black_Hole_Position", _holePosition);
@@ -132,7 +133,7 @@ public class Alien : MonoBehaviour
         //meshRenderer.material.SetVector("_Black_Hole_Position", _holePosition);
 
         bool particlePlayed = false;
-        Camera.main.GetComponent<CameraShake>().LaunchShake(0.5f, 0.3f);
+        Camera.main.GetComponent<CameraShake>().LaunchShake(0.5f, 0.03f);
         ParticleSystem confettiParticles = Instantiate(confettiParticlesPrefab, transform.position, Quaternion.identity);
 
         float t = 0f;
@@ -192,7 +193,7 @@ public class Alien : MonoBehaviour
 
     private IEnumerator Lightning()
     {
-        Camera.main.GetComponent<CameraShake>().LaunchShake(0.3f, 0.5f);
+        Camera.main.GetComponent<CameraShake>().LaunchShake(0.3f, 0.05f);
         ParticleSystem lightingParts = Instantiate(lightningParticlesPrefab, transform.position, Quaternion.identity);
         lightingParts.Play();
         float t = 0f;
@@ -216,7 +217,7 @@ public class Alien : MonoBehaviour
 
         isDead = true; //TEMP
 
-        foreach (BoxCollider bc in GetComponents<BoxCollider>() )
+        foreach (BoxCollider bc in GetComponents<BoxCollider>())
         {
             bc.enabled = false;
         }
@@ -233,22 +234,27 @@ public class Alien : MonoBehaviour
             default:
                 Destroy(gameObject);
                 break;
+
             case Bullet.EBulletType.BlackHole:
                 StartCoroutine(BlackHoleDeath(_bulletPosition, vacuumMaterial));
                 JSAM.AudioManager.PlaySound(JSAM.Sounds.BlackHole_aspiration);
                 break;
+
             case Bullet.EBulletType.Laser:
                 Destroy(gameObject);
                 JSAM.AudioManager.PlaySound(JSAM.Sounds.Baloon_Explosion);
                 break;
+
             case Bullet.EBulletType.Lightning:
                 StartCoroutine(Lightning());
                 JSAM.AudioManager.PlaySound(JSAM.Sounds.Baloon_Explosion);
                 break;
+
             case Bullet.EBulletType.Balloon:
                 animator.SetTrigger("BalloonDeath");
                 JSAM.AudioManager.PlaySound(JSAM.Sounds.Baloon_Explosion);
                 break;
+
             case Bullet.EBulletType.Dust:
                 StartCoroutine(BeingDust(balloonMaterial));
                 JSAM.AudioManager.PlaySound(JSAM.Sounds.Baloon_Explosion);

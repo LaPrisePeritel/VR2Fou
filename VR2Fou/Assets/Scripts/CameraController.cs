@@ -6,6 +6,8 @@ internal sealed class CameraController : MonoBehaviour
 {
     [SerializeField] private InputActionProperty camInput;
     [SerializeField] private InputActionProperty interactInput;
+    [SerializeField] private InputActionProperty rightControllerPosition;
+    [SerializeField] private InputActionProperty rightControllerDirection;
     [SerializeField] private LayerMask mask;
 
     private const float Y_ROT_LIMIT = 90;
@@ -32,11 +34,11 @@ internal sealed class CameraController : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (interactInput.action.WasPressedThisFrame())
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
             Debug.DrawRay(ray.origin, ray.direction * 100, Color.green, 2f);
 

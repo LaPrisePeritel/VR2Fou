@@ -22,6 +22,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject hyperspace;
     [SerializeField] private AnimationCurve hyperspaceCurve;
 
+    [Space]
+    [SerializeField] private GameObject planetsGo;
+    [SerializeField] private Vector3 planetsFinalPosition;
+
     private bool inChangingPhase = true;
     private Camera cam;
     private HYPERSPACE_STATE hyperspaceState = HYPERSPACE_STATE.IDLE;
@@ -41,6 +45,8 @@ public class MenuManager : MonoBehaviour
 
         float time = 0.0f;
 
+        Vector3 planetsStartPosition = planetsGo.transform.position;
+
         Vector3 startPosition = hyperspaceParticle.transform.position;
         while (time < HYPERSPACE_DURATION)
         {
@@ -53,6 +59,9 @@ public class MenuManager : MonoBehaviour
                 hyperspaceState = HYPERSPACE_STATE.ENTER_HYPERSPACE;
 
             hyperspaceParticle.transform.position = Vector3.Lerp(startPosition, new Vector3(startPosition.x, startPosition.y, 0.0f), interpolateTime);
+
+            planetsGo.transform.position = Vector3.Lerp(planetsStartPosition, planetsFinalPosition, interpolateTime);
+            
             switch (hyperspaceState)
             {
                 case HYPERSPACE_STATE.ENTER_HYPERSPACE:
