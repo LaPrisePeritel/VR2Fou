@@ -11429,8 +11429,10 @@ MonoBehaviour:
     m_Reference: {fileID: -9066217059660075855, guid: 596cc86f683fa6248bcd0298b65b2072,
       type: 3}
   stick: {fileID: 1692842495}
-  inclination: 15
+  inclinationJoystick: 15
+  incinationShip: 5
   speedInclination: 0.1
+  speedInclinationShip: 0.5
   <Speed>k__BackingField: 6
   movementClampX: 7.5
 --- !u!33 &2704258278626317648
@@ -14214,6 +14216,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  planetsGo: {fileID: 0}
+  planetsFinalPosition: {x: 0, y: 0, z: 0}
 --- !u!23 &8650743016971616056
 MeshRenderer:
   m_ObjectHideFlags: 0
