@@ -102,7 +102,7 @@ public class Alien : MonoBehaviour
 
     private IEnumerator BlackHoleDeath(Vector3 _holePosition, Material _vacuumMaterial)
     {
-        Camera.main.GetComponent<CameraShake>().LaunchShake(.3f, .1f);
+        Camera.main.GetComponent<CameraShake>().LaunchShake(.3f, .01f);
 
         meshRenderer.material = _vacuumMaterial;
         meshRenderer.material.SetVector("_Black_Hole_Position", _holePosition);
@@ -132,7 +132,7 @@ public class Alien : MonoBehaviour
         //meshRenderer.material.SetVector("_Black_Hole_Position", _holePosition);
 
         bool particlePlayed = false;
-        Camera.main.GetComponent<CameraShake>().LaunchShake(0.5f, 0.3f);
+        Camera.main.GetComponent<CameraShake>().LaunchShake(0.5f, 0.03f);
         ParticleSystem confettiParticles = Instantiate(confettiParticlesPrefab, transform.position, Quaternion.identity);
 
         float t = 0f;
@@ -192,7 +192,7 @@ public class Alien : MonoBehaviour
 
     private IEnumerator Lightning()
     {
-        Camera.main.GetComponent<CameraShake>().LaunchShake(0.3f, 0.5f);
+        Camera.main.GetComponent<CameraShake>().LaunchShake(0.3f, 0.05f);
         ParticleSystem lightingParts = Instantiate(lightningParticlesPrefab, transform.position, Quaternion.identity);
         lightingParts.Play();
         float t = 0f;
