@@ -11,7 +11,12 @@ public class Ship : MonoBehaviour
     private Rigidbody _rigidbody;
     private Vector3 _movement;
     private Vector3 startPosition;
+    [SerializeField] private GameObject stick;
 
+    [SerializeField] private float inclination;
+    [SerializeField] private float speedInclination;
+    Quaternion rightRot;
+    Quaternion leftRot;
     //field is used for properties
     [field: Range(1, 10)]
     [field: SerializeField]
@@ -23,11 +28,25 @@ public class Ship : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         startPosition = transform.position;
+        rightRot = Quaternion.Euler(new Vector3(0,0,inclination));
+        leftRot = Quaternion.Euler(new Vector3(0, 0, -inclination));
     }
 
     private void Update()
     {
         _movement = transform.right * Input.GetAxisRaw("Horizontal");
+        if(Input.GetAxisRaw("Horizontal") > 0)
+        {
+            stick.transform.rotation = Quaternion.Lerp(stick.transform.rotation, leftRot, Time.deltaTime / speedInclination);
+        }
+        else if(Input.GetAxisRaw("Horizontal") < 0 )
+        {
+            stick.transform.rotation = Quaternion.Lerp(stick.transform.rotation, rightRot, Time.deltaTime / speedInclination);
+        }
+        else
+        {
+            stick.transform.rotation = Quaternion.Lerp(stick.transform.rotation, Quaternion.Euler(Vector3.zero), Time.deltaTime / speedInclination);
+        }
     }
 
     private void FixedUpdate()
