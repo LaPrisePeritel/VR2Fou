@@ -13,10 +13,14 @@ public class Ship : MonoBehaviour
     private Vector3 startPosition;
     [SerializeField] private GameObject stick;
 
-    [SerializeField] private float inclination;
+    [SerializeField] private float inclinationJoystick;
+    [SerializeField] private float incinationShip;
     [SerializeField] private float speedInclination;
+    [SerializeField] private float speedInclinationShip;
     Quaternion rightRot;
     Quaternion leftRot;
+    Quaternion rightRotShip;
+    Quaternion leftRotShip;
     //field is used for properties
     [field: Range(1, 10)]
     [field: SerializeField]
@@ -28,24 +32,29 @@ public class Ship : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         startPosition = transform.position;
-        rightRot = Quaternion.Euler(new Vector3(0,0,inclination));
-        leftRot = Quaternion.Euler(new Vector3(0, 0, -inclination));
+        rightRot = Quaternion.Euler(new Vector3(0,0, inclinationJoystick));
+        leftRot = Quaternion.Euler(new Vector3(0, 0, -inclinationJoystick));
+        rightRotShip = Quaternion.Euler(new Vector3(0, 0, incinationShip));
+        leftRotShip = Quaternion.Euler(new Vector3(0, 0, -incinationShip));
     }
 
     private void Update()
     {
-        _movement = transform.right * Input.GetAxisRaw("Horizontal");
+        _movement = Vector3.right * Input.GetAxisRaw("Horizontal");
         if(Input.GetAxisRaw("Horizontal") > 0)
         {
             stick.transform.rotation = Quaternion.Lerp(stick.transform.rotation, leftRot, Time.deltaTime / speedInclination);
+            transform.rotation = Quaternion.Lerp(transform.rotation, leftRotShip, Time.deltaTime / speedInclinationShip);
         }
         else if(Input.GetAxisRaw("Horizontal") < 0 )
         {
             stick.transform.rotation = Quaternion.Lerp(stick.transform.rotation, rightRot, Time.deltaTime / speedInclination);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rightRotShip, Time.deltaTime / speedInclinationShip);
         }
         else
         {
             stick.transform.rotation = Quaternion.Lerp(stick.transform.rotation, Quaternion.Euler(Vector3.zero), Time.deltaTime / speedInclination);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(Vector3.zero), Time.deltaTime / speedInclinationShip);
         }
     }
 
