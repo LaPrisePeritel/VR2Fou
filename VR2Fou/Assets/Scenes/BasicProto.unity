@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.052675273, g: 0.01788594, b: 0.11802831, a: 1}
+  m_IndirectSpecularColor: {r: 0.052675337, g: 0.01788597, b: 0.11802834, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11426,7 +11426,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: -9066217059660075855, guid: 596cc86f683fa6248bcd0298b65b2072,
+    m_Reference: {fileID: -3280531657046564430, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
   stick: {fileID: 1692842495}
   inclinationJoystick: 15
@@ -11538,7 +11538,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: -5315192424057578616, guid: 596cc86f683fa6248bcd0298b65b2072,
+    m_Reference: {fileID: 7806967178150508997, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
   ShootKey:
     m_UseReference: 1
@@ -11551,7 +11551,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 3464749222348889340, guid: 596cc86f683fa6248bcd0298b65b2072,
+    m_Reference: {fileID: 7999838512155454579, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
   defaultBullet: {fileID: 3884862862415128373, guid: 788d642bd7a709e4cb508713576d0f98,
     type: 3}
@@ -11999,7 +11999,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ActionAssets:
-  - {fileID: -944628639613478452, guid: 596cc86f683fa6248bcd0298b65b2072, type: 3}
+  - {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!114 &5465817933988215186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12015,8 +12015,8 @@ MonoBehaviour:
   m_Camera: {fileID: 5465817934007976300}
   m_OriginBaseGameObject: {fileID: 5465817933988215184}
   m_CameraFloorOffsetObject: {fileID: 5465817934306391175}
-  m_RequestedTrackingOriginMode: 0
-  m_CameraYOffset: 1.1176
+  m_RequestedTrackingOriginMode: 1
+  m_CameraYOffset: 0
 --- !u!4 &5465817933988215187
 Transform:
   m_ObjectHideFlags: 0
@@ -12025,7 +12025,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5465817933988215184}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: -0.89}
+  m_LocalPosition: {x: 0, y: 0.518, z: -0.742}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12266,7 +12266,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: -8581951277387234862, guid: 596cc86f683fa6248bcd0298b65b2072,
+    m_Reference: {fileID: 8899111634187227800, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
   interactInput:
     m_UseReference: 1
@@ -12279,8 +12279,32 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: -4026634031179876390, guid: 596cc86f683fa6248bcd0298b65b2072,
+    m_Reference: {fileID: -1678603691787433005, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
+  rightControllerPosition:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Right Controller Position
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 1e663c1f-dde1-4945-8a96-ce36191ff7fd
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  rightControllerDirection:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Right Controller Direction
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: dbdf8b91-e725-4e99-bf4d-63588bb95fd0
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   mask:
     serializedVersion: 2
     m_Bits: 128
@@ -12294,7 +12318,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5465817934306391175}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.1176, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
