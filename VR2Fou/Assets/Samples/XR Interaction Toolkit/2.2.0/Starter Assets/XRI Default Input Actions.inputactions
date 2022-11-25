@@ -1542,6 +1542,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "RightHandlePosition",
+                    "type": "Value",
+                    "id": "d8747a5b-66ce-4f96-8d70-1c49cc03a64b",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RightHandleDirection",
+                    "type": "Value",
+                    "id": "fa465168-58cd-4625-8958-c728d14f5e8a",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -1718,6 +1736,28 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "398bd09e-1d0d-4bb9-9b0c-d11862d86b7f",
+                    "path": "<OculusTouchController>{RightHand}/devicePose/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightHandlePosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ff81d5c3-36e1-4afc-a745-cd3be36424d1",
+                    "path": "<OculusTouchController>{RightHand}/pointer/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Noncontinuous Move",
+                    "action": "RightHandleDirection",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
