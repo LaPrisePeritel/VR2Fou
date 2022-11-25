@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.052675337, g: 0.01788597, b: 0.11802834, a: 1}
+  m_IndirectSpecularColor: {r: 0.052675273, g: 0.01788594, b: 0.11802831, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6103,7 +6103,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a4ce36183f6a5ea4fbde93e657cea8ca, type: 2}
+  - {fileID: 2100000, guid: e7d14bf57b02851428bbe09d303e9da2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11606,7 +11606,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8c1e9eb00fea7334e9e076bc3dcf7e8d, type: 2}
+  - {fileID: 2100000, guid: 4f4d3c67fe80e834abcfcc06c85b0ecc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14214,6 +14214,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  planetsGo: {fileID: 0}
+  planetsFinalPosition: {x: 0, y: 0, z: 0}
 --- !u!23 &8650743016971616056
 MeshRenderer:
   m_ObjectHideFlags: 0
